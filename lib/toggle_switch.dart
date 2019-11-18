@@ -32,7 +32,8 @@ class ToggleSwitch extends StatefulWidget {
   _ToggleSwitchState createState() => _ToggleSwitchState();
 }
 
-class _ToggleSwitchState extends State<ToggleSwitch> with AutomaticKeepAliveClientMixin<ToggleSwitch> {
+class _ToggleSwitchState extends State<ToggleSwitch>
+    with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   int current;
 
   @override
@@ -56,7 +57,8 @@ class _ToggleSwitchState extends State<ToggleSwitch> with AutomaticKeepAliveClie
           mainAxisSize: MainAxisSize.min,
           children: List.generate(widget.labels.length * 2 - 1, (index) {
             final active = index ~/ 2 == current;
-            final textColor = active ? widget.activeTextColor : widget.inactiveTextColor;
+            final textColor =
+                active ? widget.activeTextColor : widget.inactiveTextColor;
             final bgColor = active ? widget.activeBgColor : Colors.transparent;
             if (index % 2 == 1) {
               final activeDivider = active || index ~/ 2 == current - 1;
@@ -72,7 +74,8 @@ class _ToggleSwitchState extends State<ToggleSwitch> with AutomaticKeepAliveClie
                   constraints: BoxConstraints(minWidth: widget.minWidth),
                   alignment: Alignment.center,
                   color: bgColor,
-                  child: Text(widget.labels[index ~/ 2], style: TextStyle(color: textColor)),
+                  child: Text(widget.labels[index ~/ 2],
+                      style: TextStyle(color: textColor)),
                 ),
               );
             }
