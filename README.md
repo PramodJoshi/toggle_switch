@@ -1,6 +1,6 @@
 # toggle_switch
 
-A simple toggle switch widget.
+Toggle Switch - A simple toggle switch widget. It can be fully customized - width, colors, text, corner radius etc. It maintains selection state on scroll.
 
 ## Getting Started
 
