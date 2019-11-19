@@ -22,7 +22,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 Example 1:
 
-```
+```dart
 import 'package:flutter/material.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
 
 Example 2:
 
-```
+```dart
 import 'package:flutter/material.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
