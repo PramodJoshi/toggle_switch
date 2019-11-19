@@ -92,6 +92,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+```
+
 ![Example](https://media.giphy.com/media/kGLlPpB95fSZA93nOn/giphy.gif)
 
 ## Credits
