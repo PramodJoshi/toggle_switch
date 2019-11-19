@@ -1,16 +1,101 @@
-# example
+# Toggle Switch Example
 
-An example application using toggle switch widget.
+A toggle switch example.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+In the `pubspec.yaml` of your flutter project, add the following dependency:
 
-A few resources to get you started if this is your first Flutter project:
+```yaml
+dependencies:
+  ...
+  toggle_switch: "^0.1.4"
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Import it:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```dart
+import 'package:toggle_switch/toggle_switch.dart';
+```
+
+## Usage
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:toggle_switch/toggle_switch.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('Basic toggle switch: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                minWidth: 90.0,
+                initialLabelIndex: 2,
+                activeBgColor: Colors.redAccent,
+                activeTextColor: Colors.white,
+                inactiveBgColor: Colors.grey,
+                inactiveTextColor: Colors.grey[900],
+                labels: ['America', 'Canada', 'Mexico'],
+                onToggle: (index) {
+                  print('switched to: $index');
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('Toggle switch with icons: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['YES', 'NO'],
+                  icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  }),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('With icons and different active colors: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeColors: [Colors.blue, Colors.pink],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```

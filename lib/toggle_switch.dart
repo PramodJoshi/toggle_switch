@@ -12,8 +12,10 @@ class ToggleSwitch extends StatefulWidget {
   final List<String> labels;
   final double cornerRadius;
   final OnToggle onToggle;
-  final int initialLabel;
+  final int initialLabelIndex;
   final double minWidth;
+  final List<IconData> icons;
+  final List<Color> activeColors;
 
   ToggleSwitch({
     Key key,
@@ -24,8 +26,10 @@ class ToggleSwitch extends StatefulWidget {
     @required this.labels,
     this.onToggle,
     this.cornerRadius = 8.0,
-    this.initialLabel = 0,
+    this.initialLabelIndex = 0,
     this.minWidth = 72,
+    this.icons,
+    this.activeColors,
   }) : super(key: key);
 
   @override
@@ -38,7 +42,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   @override
   void initState() {
-    current = widget.initialLabel;
+    current = widget.initialLabelIndex;
     super.initState();
   }
 
@@ -59,7 +63,12 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             final active = index ~/ 2 == current;
             final textColor =
                 active ? widget.activeTextColor : widget.inactiveTextColor;
-            final bgColor = active ? widget.activeBgColor : Colors.transparent;
+            var bgColor = Colors.transparent;
+            if (active) {
+              bgColor = widget.activeColors == null
+                  ? widget.activeBgColor
+                  : widget.activeColors[index ~/ 2];
+            }
             if (index % 2 == 1) {
               final activeDivider = active || index ~/ 2 == current - 1;
               return Container(
@@ -74,8 +83,19 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   constraints: BoxConstraints(minWidth: widget.minWidth),
                   alignment: Alignment.center,
                   color: bgColor,
-                  child: Text(widget.labels[index ~/ 2],
-                      style: TextStyle(color: textColor)),
+                  child: widget.icons == null
+                      ? Text(widget.labels[index ~/ 2],
+                          style: TextStyle(color: textColor))
+                      : Row(
+                          children: <Widget>[
+                            Icon(widget.icons[index ~/ 2],
+                                color: textColor, size: 17.0),
+                            Padding(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: Text(widget.labels[index ~/ 2],
+                                    style: TextStyle(color: textColor)))
+                          ],
+                        ),
                 ),
               );
             }

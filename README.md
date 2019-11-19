@@ -1,6 +1,6 @@
 # Toggle Switch
 
-A simple toggle switch widget. It can be fully customized - width, colors, text, corner radius etc. It maintains selection state on scroll.
+A simple toggle switch widget. It can be fully customized with desired icons, width, colors, text, corner radius etc. It also maintains selection state.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: "^0.1.3"
+  toggle_switch: "^0.1.4"
 ```
 
 Import it:
@@ -18,17 +18,9 @@ Import it:
 import 'package:toggle_switch/toggle_switch.dart';
 ```
 
-## Usage
-
-Example 1:
+## Usage Example
 
 ```dart
-import 'package:flutter/material.dart';
-
-import 'package:toggle_switch/toggle_switch.dart';
-
-void main() => runApp(MyApp());
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,9 +30,15 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('Basic toggle switch: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
               ToggleSwitch(
                 minWidth: 90.0,
-                initialLabel: 2,
+                initialLabelIndex: 2,
                 activeBgColor: Colors.redAccent,
                 activeTextColor: Colors.white,
                 inactiveBgColor: Colors.grey,
@@ -49,43 +47,44 @@ class MyApp extends StatelessWidget {
                 onToggle: (index) {
                   print('switched to: $index');
                 },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-```
-![Example 1](https://media.giphy.com/media/kHkxHHpPkvVFOLB6Iq/giphy.gif)
-
-Example 2:
-
-```dart
-import 'package:flutter/material.dart';
-
-import 'package:toggle_switch/toggle_switch.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ToggleSwitch(
-                cornerRadius: 20,
-                activeBgColor: Colors.green,
-                activeTextColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveTextColor: Colors.white,
-                labels: ['YES', 'NO'],
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('With icons: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['YES', 'NO'],
+                  icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  }),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('With icons and different active colors: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeColors: [Colors.blue, Colors.pink],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  })
             ],
           ),
         ),
@@ -93,8 +92,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-```
-![Example 2](https://media.giphy.com/media/U72TwlCo3tWSkqBunm/giphy.gif)
+![Example](https://media.giphy.com/media/kGLlPpB95fSZA93nOn/giphy.gif)
 
 ## Credits
 [Eugene](https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)

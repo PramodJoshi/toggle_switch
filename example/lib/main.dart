@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,9 +13,15 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('Basic toggle switch: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
               ToggleSwitch(
                 minWidth: 90.0,
-                initialLabel: 2,
+                initialLabelIndex: 2,
                 activeBgColor: Colors.redAccent,
                 activeTextColor: Colors.white,
                 inactiveBgColor: Colors.grey,
@@ -25,15 +31,43 @@ class MyApp extends StatelessWidget {
                   print('switched to: $index');
                 },
               ),
-              SizedBox(height: 16),
-              ToggleSwitch(
-                cornerRadius: 20,
-                activeBgColor: Colors.green,
-                activeTextColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveTextColor: Colors.white,
-                labels: ['YES', 'NO'],
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('With icons: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
               ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['YES', 'NO'],
+                  icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  }),
+              Padding(
+                padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
+                child: Text('With icons and different active colors: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
+              ),
+              ToggleSwitch(
+                  minWidth: 90.0,
+                  cornerRadius: 20,
+                  activeBgColor: Colors.green,
+                  activeTextColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveTextColor: Colors.white,
+                  labels: ['Male', 'Female'],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  activeColors: [Colors.blue, Colors.pink],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  })
             ],
           ),
         ),
