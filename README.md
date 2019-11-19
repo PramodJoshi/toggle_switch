@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-![Example](https://media.giphy.com/media/kGLlPpB95fSZA93nOn/giphy.gif)
+![Example](https://media.giphy.com/media/RhGLjMeSH66Qq1596e/giphy.gif)
 
 ## Credits
 [Eugene](https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
