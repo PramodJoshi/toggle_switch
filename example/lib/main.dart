@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
                 labels: ['America', 'Canada', 'Mexico'],
                 onToggle: (index) {
                   print('switched to: $index');
+                  return Future.value(true);
                 },
               ),
               Padding(
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
                   icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
                   onToggle: (index) {
                     print('switched to: $index');
+                    return Future.value(true);
                   }),
               Padding(
                 padding: const EdgeInsets.only(top: 35.0, bottom: 15.0),
@@ -67,6 +69,7 @@ class MyApp extends StatelessWidget {
                   activeColors: [Colors.blue, Colors.pink],
                   onToggle: (index) {
                     print('switched to: $index');
+                    return Future.value(true);
                   })
             ],
           ),
