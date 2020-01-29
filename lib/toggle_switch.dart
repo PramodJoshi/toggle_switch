@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-typedef OnToggle = void Function(int index);
+typedef OnToggle = Future<bool> Function(int index);
 
 class ToggleSwitch extends StatefulWidget {
   final Color activeBgColor;
@@ -14,9 +14,17 @@ class ToggleSwitch extends StatefulWidget {
   final OnToggle onToggle;
   final int initialLabelIndex;
   final double minWidth;
+  final double minHeight;
   final List<IconData> icons;
   final List<Color> activeColors;
 
+  /// [onToggle] is a callback made when the user attempts
+  /// to toggle the switch. You can reject the toggle by
+  /// returning false, otherwise return true.
+  ///
+  /// [minHeight] controls the minimum height of the switch. The default
+  /// value is 40. Pass [null] to allow the switch to size based on its content.
+  ///
   ToggleSwitch({
     Key key,
     @required this.activeBgColor,
@@ -28,15 +36,16 @@ class ToggleSwitch extends StatefulWidget {
     this.cornerRadius = 8.0,
     this.initialLabelIndex = 0,
     this.minWidth = 72,
+    this.minHeight = 40,
     this.icons,
     this.activeColors,
   }) : super(key: key);
 
   @override
-  _ToggleSwitchState createState() => _ToggleSwitchState();
+  ToggleSwitchState createState() => ToggleSwitchState();
 }
 
-class _ToggleSwitchState extends State<ToggleSwitch>
+class ToggleSwitchState extends State<ToggleSwitch>
     with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   int current;
 
@@ -52,11 +61,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return ClipRRect(
+    return
+        // round the corners of the whole widget
+        ClipRRect(
       borderRadius: BorderRadius.circular(widget.cornerRadius),
       child: Container(
-        height: 40,
+        height: widget.minHeight,
         color: widget.inactiveBgColor,
+        // the list of options
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(widget.labels.length * 2 - 1, (index) {
@@ -80,7 +92,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               return GestureDetector(
                 onTap: () => _handleOnTap(index ~/ 2),
                 child: Container(
-                  constraints: BoxConstraints(minWidth: widget.minWidth),
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                  // constraints: BoxConstraints(minWidth: widget.minWidth),
                   alignment: Alignment.center,
                   color: bgColor,
                   child: widget.icons == null
@@ -106,9 +119,17 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   }
 
   void _handleOnTap(int index) async {
+    setState(() async {
+      bool allowToggle = true;
+      if (widget.onToggle != null) {
+        allowToggle = await widget.onToggle(index);
+      }
+
+      if (allowToggle) current = index;
+    });
+  }
+
+  void setIndex(int index) {
     setState(() => current = index);
-    if (widget.onToggle != null) {
-      widget.onToggle(index);
-    }
   }
 }
