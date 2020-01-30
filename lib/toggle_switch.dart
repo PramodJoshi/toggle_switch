@@ -119,12 +119,12 @@ class ToggleSwitchState extends State<ToggleSwitch>
   }
 
   void _handleOnTap(int index) async {
-    setState(() async {
-      bool allowToggle = true;
-      if (widget.onToggle != null) {
-        allowToggle = await widget.onToggle(index);
-      }
+    bool allowToggle = true;
+    if (widget.onToggle != null) {
+      allowToggle = await widget.onToggle(index);
+    }
 
+    setState(() {
       if (allowToggle) current = index;
     });
   }
