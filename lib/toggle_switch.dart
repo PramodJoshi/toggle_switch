@@ -5,55 +5,55 @@ import 'package:flutter/material.dart';
 typedef OnToggle = void Function(int index);
 
 class ToggleSwitch extends StatefulWidget {
-  /// Active background color.
+  /// Active background color
   final Color activeBgColor;
 
-  /// Active foreground color.
+  /// Active foreground color
   final Color activeFgColor;
 
-  /// Inactive background color.
+  /// Inactive background color
   final Color inactiveBgColor;
 
-  /// Inactive foreground color.
+  /// Inactive foreground color
   final Color inactiveFgColor;
 
   /// List of labels
   final List<String> labels;
 
-  /// List of icons.
+  /// List of icons
   final List<IconData> icons;
 
-  /// List of active foreground colors.
+  /// List of active foreground colors
   final List<Color> activeBgColors;
 
-  /// Minimum switch width.
+  /// Minimum switch width
   final double minWidth;
 
-  /// Minimum switch height.
+  /// Minimum switch height
   final double minHeight;
 
-  /// Widget's corner radius.
+  /// Widget's corner radius
   final double cornerRadius;
 
-  /// Font size.
+  /// Font size
   final double fontSize;
 
-  /// Icon size.
+  /// Icon size
   final double iconSize;
 
-  /// OnToggle function.
+  /// OnToggle function
   final OnToggle onToggle;
 
-  /// Initial label index.
+  /// Initial label index
   final int initialLabelIndex;
 
   ToggleSwitch({
     Key key,
-    @required this.activeBgColor,
-    @required this.activeFgColor,
-    @required this.inactiveBgColor,
-    @required this.inactiveFgColor,
     @required this.labels,
+    this.activeBgColor,
+    this.activeFgColor,
+    this.inactiveBgColor,
+    this.inactiveFgColor,
     this.onToggle,
     this.cornerRadius = 8.0,
     this.initialLabelIndex = 0,
@@ -74,6 +74,18 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Current selected label
   int current;
 
+  /// Active background color
+  Color activeBgColor;
+
+  /// Active foreground color
+  Color activeFgColor;
+
+  /// Inactive background color
+  Color inactiveBgColor;
+
+  /// Inctive foreground color
+  Color inactiveFgColor;
+
   @override
   void initState() {
     /// Initialize current label with initial label index.
@@ -89,11 +101,32 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    /// Assigns active background color to default primary theme color if it's null/not provided.
+    activeBgColor = widget.activeBgColor == null
+        ? Theme.of(context).primaryColor
+        : widget.activeBgColor;
+
+    /// Assigns active foreground color to default accent text theme color if it's null/not provided.
+    activeFgColor = widget.activeFgColor == null
+        ? Theme.of(context).accentTextTheme.bodyText1.color
+        : widget.activeFgColor;
+
+    /// Assigns inactive background color to default disabled theme color if it's null/not provided.
+    inactiveBgColor = widget.inactiveBgColor == null
+        ? Theme.of(context).disabledColor
+        : widget.inactiveBgColor;
+
+    /// Assigns inactive foreground color to default text theme color if it's null/not provided.
+    inactiveFgColor = widget.inactiveFgColor == null
+        ? Theme.of(context).textTheme.bodyText1.color
+        : widget.inactiveFgColor;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(widget.cornerRadius),
       child: Container(
         height: widget.minHeight,
-        color: widget.inactiveBgColor,
+        color: inactiveBgColor,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(widget.labels.length * 2 - 1, (index) {
@@ -104,19 +137,18 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             ///
             /// Set active foreground color if current index is active.
             /// Set inactive foreground color if current index is inactive.
-            final fgColor =
-                active ? widget.activeFgColor : widget.inactiveFgColor;
+            final fgColor = active ? activeFgColor : inactiveFgColor;
 
             /// Default background color
             var bgColor = Colors.transparent;
 
-            /// Changes background color if current index is active
+            /// Changes background color if current index is active.
             ///
             /// Set same active background color for all items if active background colors list is empty.
             /// Set different active background color for current item by matching index if active background colors list is not empty
             if (active) {
               bgColor = widget.activeBgColors == null
-                  ? widget.activeBgColor
+                  ? activeBgColor
                   : widget.activeBgColors[index ~/ 2];
             }
 
@@ -126,7 +158,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               /// Returns item divider
               return Container(
                 width: 1,
-                color: activeDivider ? widget.activeBgColor : Colors.white30,
+                color: activeDivider ? bgColor : Colors.white30,
                 margin: EdgeInsets.symmetric(vertical: activeDivider ? 0 : 8),
               );
             } else {

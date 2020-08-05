@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: "^0.1.5"
+  toggle_switch: "^0.1.6"
 ```
 
 Import it:
@@ -23,13 +23,9 @@ import 'package:toggle_switch/toggle_switch.dart';
 ### Basic toggle switch
 
 ```dart
+// Here default theme colors are used for activeBgColor, activeFgColor, inactiveBgColor and inactiveFgColor
 ToggleSwitch(
-  minWidth: 90.0,
   initialLabelIndex: 0,
-  activeBgColor: Colors.redAccent,
-  activeFgColor: Colors.white,
-  inactiveBgColor: Colors.grey,
-  inactiveFgColor: Colors.grey[900],
   labels: ['America', 'Canada', 'Mexico'],
   onToggle: (index) {
     print('switched to: $index');

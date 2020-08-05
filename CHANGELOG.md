@@ -1,3 +1,8 @@
+## 0.1.6
+* Made color parameters optional. 
+* Use default theme color if color parameter is null/not provided.
+* Added additional gitignores for package.
+
 ## 0.1.5
 * Added minHeight, fontSize, iconSize support.
 * Added text overflow support.

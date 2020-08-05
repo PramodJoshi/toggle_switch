@@ -22,12 +22,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               ToggleSwitch(
-                minWidth: 90.0,
-                initialLabelIndex: 2,
-                activeBgColor: Colors.redAccent,
-                activeFgColor: Colors.white,
-                inactiveBgColor: Colors.grey,
-                inactiveFgColor: Colors.grey[900],
+                initialLabelIndex: 0,
                 labels: ['America', 'Canada', 'Mexico'],
                 onToggle: (index) {
                   print('switched to: $index');
