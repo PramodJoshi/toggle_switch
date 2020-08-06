@@ -44,6 +44,9 @@ class ToggleSwitch extends StatefulWidget {
   /// OnToggle function
   final OnToggle onToggle;
 
+  // Change selection on tap
+  final bool changeOnTap;
+
   /// Initial label index
   int initialLabelIndex;
 
@@ -59,6 +62,7 @@ class ToggleSwitch extends StatefulWidget {
     this.initialLabelIndex = 0,
     this.minWidth = 72.0,
     this.minHeight = 40.0,
+    this.changeOnTap = true,
     this.icons,
     this.activeBgColors,
     this.fontSize = 14.0,
@@ -82,7 +86,6 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Inctive foreground color
   Color inactiveFgColor;
-
 
   /// Maintain selection state.
   @override
@@ -143,7 +146,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             }
 
             if (index % 2 == 1) {
-              final activeDivider = active || index ~/ 2 == widget.initialLabelIndex - 1;
+              final activeDivider =
+                  active || index ~/ 2 == widget.initialLabelIndex - 1;
 
               /// Returns item divider
               return Container(
@@ -199,7 +203,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Handles selection
   void _handleOnTap(int index) async {
-    setState(() => widget.initialLabelIndex = index);
+    if (widget.changeOnTap) {
+      setState(() => widget.initialLabelIndex = index);
+    }
     if (widget.onToggle != null) {
       widget.onToggle(index);
     }
