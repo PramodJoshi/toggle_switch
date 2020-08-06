@@ -44,8 +44,11 @@ class ToggleSwitch extends StatefulWidget {
   /// OnToggle function
   final OnToggle onToggle;
 
+  // Change selection on tap
+  final bool changeOnTap;
+
   /// Initial label index
-  final int initialLabelIndex;
+  int initialLabelIndex;
 
   ToggleSwitch({
     Key key,
@@ -59,6 +62,7 @@ class ToggleSwitch extends StatefulWidget {
     this.initialLabelIndex = 0,
     this.minWidth = 72.0,
     this.minHeight = 40.0,
+    this.changeOnTap = true,
     this.icons,
     this.activeBgColors,
     this.fontSize = 14.0,
@@ -71,9 +75,6 @@ class ToggleSwitch extends StatefulWidget {
 
 class _ToggleSwitchState extends State<ToggleSwitch>
     with AutomaticKeepAliveClientMixin<ToggleSwitch> {
-  /// Current selected label
-  int current;
-
   /// Active background color
   Color activeBgColor;
 
@@ -85,14 +86,6 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Inctive foreground color
   Color inactiveFgColor;
-
-  @override
-  void initState() {
-    /// Initialize current label with initial label index.
-    current = widget.initialLabelIndex;
-
-    super.initState();
-  }
 
   /// Maintain selection state.
   @override
@@ -131,7 +124,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           mainAxisSize: MainAxisSize.min,
           children: List.generate(widget.labels.length * 2 - 1, (index) {
             /// Active if index matches current
-            final active = index ~/ 2 == current;
+            final active = index ~/ 2 == widget.initialLabelIndex;
 
             /// Assigns foreground color based on active status.
             ///
@@ -153,7 +146,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             }
 
             if (index % 2 == 1) {
-              final activeDivider = active || index ~/ 2 == current - 1;
+              final activeDivider =
+                  active || index ~/ 2 == widget.initialLabelIndex - 1;
 
               /// Returns item divider
               return Container(
@@ -209,7 +203,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Handles selection
   void _handleOnTap(int index) async {
-    setState(() => current = index);
+    if (widget.changeOnTap) {
+      setState(() => widget.initialLabelIndex = index);
+    }
     if (widget.onToggle != null) {
       widget.onToggle(index);
     }
