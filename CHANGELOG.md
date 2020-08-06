@@ -1,3 +1,7 @@
+## 0.1.7
+* Added fix to programmatically change switch index ([a04d62e](https://github.com/PramodJoshi/toggle_switch/pull/8/commits/a04d62e3c0630785ad2b9dd66b2226a68bed57e2)). 
+* Added changeOnTap option to enable/disable switch ([a04d62e](https://github.com/PramodJoshi/toggle_switch/pull/8/commits/a04d62e3c0630785ad2b9dd66b2226a68bed57e2)).
+
 ## 0.1.6
 * Made color parameters optional. 
 * Use default theme color if color parameter is null/not provided.

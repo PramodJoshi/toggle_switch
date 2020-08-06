@@ -1,9 +1,10 @@
-//Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch
+//Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
 
 import 'package:flutter/material.dart';
 
 typedef OnToggle = void Function(int index);
 
+// ignore: must_be_immutable
 class ToggleSwitch extends StatefulWidget {
   /// Active background color
   final Color activeBgColor;
