@@ -1,3 +1,9 @@
+## 0.1.8
+* Added left and right padding. 
+* Added fixes to prevent overflow:
+    - max widget width is calculated based on the number of labels/switches, minWidth and max screen width.
+    - resize widgets to fit if user-provided size params exceed available width.
+
 ## 0.1.7
 * Added fix to programmatically change switch index ([a04d62e](https://github.com/PramodJoshi/toggle_switch/pull/8/commits/a04d62e3c0630785ad2b9dd66b2226a68bed57e2)). 
 * Added changeOnTap option to enable/disable switch ([a04d62e](https://github.com/PramodJoshi/toggle_switch/pull/8/commits/a04d62e3c0630785ad2b9dd66b2226a68bed57e2)).

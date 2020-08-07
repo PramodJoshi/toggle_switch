@@ -129,8 +129,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
             /// Assigns foreground color based on active status.
             ///
-            /// Set active foreground color if current index is active.
-            /// Set inactive foreground color if current index is inactive.
+            /// Sets active foreground color if current index is active.
+            /// Sets inactive foreground color if current index is inactive.
             final fgColor = active ? activeFgColor : inactiveFgColor;
 
             /// Default background color
@@ -138,8 +138,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
             /// Changes background color if current index is active.
             ///
-            /// Set same active background color for all items if active background colors list is empty.
-            /// Set different active background color for current item by matching index if active background colors list is not empty
+            /// Sets same active background color for all items if active background colors list is empty.
+            /// Sets different active background color for current item by matching index if active background colors list is not empty
             if (active) {
               bgColor = widget.activeBgColors == null
                   ? activeBgColor
@@ -161,7 +161,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               return GestureDetector(
                 onTap: () => _handleOnTap(index ~/ 2),
                 child: Container(
-                  constraints: BoxConstraints(minWidth: widget.minWidth),
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  constraints: BoxConstraints(
+                      maxWidth: _calculateWidth(widget.minWidth)),
                   alignment: Alignment.center,
                   color: bgColor,
                   child: widget.icons == null
@@ -174,21 +176,27 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                           overflow: TextOverflow.ellipsis,
                         )
                       : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
                               widget.icons[index ~/ 2],
                               color: fgColor,
-                              size: widget.iconSize,
+                              size: widget.iconSize >
+                                      (_calculateWidth(widget.minWidth) / 3)
+                                  ? (_calculateWidth(widget.minWidth)) / 3
+                                  : widget.iconSize,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Text(
-                                widget.labels[index ~/ 2],
-                                style: TextStyle(
-                                  color: fgColor,
-                                  fontSize: widget.fontSize,
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: Text(
+                                  widget.labels[index ~/ 2],
+                                  style: TextStyle(
+                                    color: fgColor,
+                                    fontSize: widget.fontSize,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -210,5 +218,25 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     if (widget.onToggle != null) {
       widget.onToggle(index);
     }
+  }
+
+  /// Calculates width to prevent overflow by taking screen width into account.
+  double _calculateWidth(double minWidth) {
+    /// Total number of labels/switches
+    int totalLabels = widget.labels.length;
+
+    /// Extra width to prevent overflow and add padding
+    double extraWidth = 0.10 * totalLabels;
+
+    /// Max screen width
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    /// Returns width per label
+    ///
+    /// Returns passed minWidth per label if total requested width plus extra width is less than max screen width.
+    /// Returns calculated width to fit within the max screen width if total requested width plus extra width is more than max screen width.
+    return (totalLabels + extraWidth) * widget.minWidth < screenWidth
+        ? widget.minWidth
+        : screenWidth / (totalLabels + extraWidth);
   }
 }
