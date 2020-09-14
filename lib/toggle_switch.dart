@@ -48,27 +48,35 @@ class ToggleSwitch extends StatefulWidget {
   // Change selection on tap
   final bool changeOnTap;
 
+  // color of border
+  final Color boarderColor;
+
+  // this is border thickness
+  final double boarderWidth;
+
   /// Initial label index
   int initialLabelIndex;
 
-  ToggleSwitch({
-    Key key,
-    @required this.labels,
-    this.activeBgColor,
-    this.activeFgColor,
-    this.inactiveBgColor,
-    this.inactiveFgColor,
-    this.onToggle,
-    this.cornerRadius = 8.0,
-    this.initialLabelIndex = 0,
-    this.minWidth = 72.0,
-    this.minHeight = 40.0,
-    this.changeOnTap = true,
-    this.icons,
-    this.activeBgColors,
-    this.fontSize = 14.0,
-    this.iconSize = 17.0,
-  }) : super(key: key);
+  ToggleSwitch(
+      {Key key,
+      @required this.labels,
+      this.activeBgColor,
+      this.activeFgColor,
+      this.inactiveBgColor,
+      this.inactiveFgColor,
+      this.onToggle,
+      this.cornerRadius = 8.0,
+      this.initialLabelIndex = 0,
+      this.minWidth = 72.0,
+      this.minHeight = 40.0,
+      this.changeOnTap = true,
+      this.icons,
+      this.activeBgColors,
+      this.fontSize = 14.0,
+      this.iconSize = 17.0,
+      this.boarderWidth = 3,
+      this.boarderColor = Colors.white})
+      : super(key: key);
 
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
@@ -117,10 +125,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         : widget.inactiveFgColor;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(widget.cornerRadius),
       child: Container(
         height: widget.minHeight,
-        color: inactiveBgColor,
+        decoration: BoxDecoration(
+          color: inactiveBgColor,
+          borderRadius: BorderRadius.circular(widget.cornerRadius),
+          border: Border.all(
+              width: widget.boarderWidth, color: widget.boarderColor),
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(widget.labels.length * 2 - 1, (index) {
@@ -165,7 +177,23 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   constraints: BoxConstraints(
                       maxWidth: _calculateWidth(widget.minWidth)),
                   alignment: Alignment.center,
-                  color: bgColor,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(
+                            index ~/ 2 == widget.labels.length - 1
+                                ? widget.cornerRadius
+                                : 0), //radius for selected item in top left
+                        topRight: Radius.circular(index ~/ 2 ==
+                                widget.labels.length - 1
+                            ? widget.cornerRadius
+                            : 0), // radius for selected item in bottom right
+                        bottomLeft: Radius.circular(index == 0
+                            ? widget.cornerRadius
+                            : 0), // radius for selected item in bottom left
+                        topLeft: Radius.circular(
+                            index == 0 ? widget.cornerRadius : 0)), //
+                    color: bgColor,
+                  ),
                   child: widget.icons == null
                       ? Text(
                           widget.labels[index ~/ 2],

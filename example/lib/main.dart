@@ -117,6 +117,28 @@ class MyApp extends StatelessWidget {
                   print('switched to: $index');
                 },
               ),
+              ToggleSwitch(
+                minWidth: 90.0,
+                minHeight: 70.0,
+                initialLabelIndex: 2,
+                cornerRadius: 20.0,
+                activeFgColor: Colors.white,
+                inactiveBgColor: Colors.grey,
+                inactiveFgColor: Colors.white,
+                labels: ['first', 'second', 'third'],
+                boarderWidth: 2.0,
+                boarderColor: Colors.yellow,
+                icons: [
+                  FontAwesomeIcons.mars,
+                  FontAwesomeIcons.venus,
+                  FontAwesomeIcons.transgender
+                ],
+                iconSize: 30.0,
+                activeBgColors: [Colors.blue, Colors.pink, Colors.purple],
+                onToggle: (index) {
+                  print('switched to: $index');
+                },
+              ),
             ],
           ),
         )),
