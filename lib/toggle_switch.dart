@@ -152,7 +152,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
               /// Returns item divider
               return Container(
-                width: 1,
+                width: 0,
                 color: activeDivider ? bgColor : Colors.white30,
                 margin: EdgeInsets.symmetric(vertical: activeDivider ? 0 : 8),
               );
@@ -161,11 +161,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               return GestureDetector(
                 onTap: () => _handleOnTap(index ~/ 2),
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.circular(widget.cornerRadius),
+                  ),
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   constraints: BoxConstraints(
                       maxWidth: _calculateWidth(widget.minWidth)),
                   alignment: Alignment.center,
-                  color: bgColor,
                   child: widget.icons == null
                       ? Text(
                           widget.labels[index ~/ 2],
