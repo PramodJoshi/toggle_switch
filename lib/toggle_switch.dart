@@ -7,25 +7,25 @@ typedef OnToggle = void Function(int index);
 // ignore: must_be_immutable
 class ToggleSwitch extends StatefulWidget {
   /// Active background color
-  final Color activeBgColor;
+  final Color? activeBgColor;
 
   /// Active foreground color
-  final Color activeFgColor;
+  final Color? activeFgColor;
 
   /// Inactive background color
-  final Color inactiveBgColor;
+  final Color? inactiveBgColor;
 
   /// Inactive foreground color
-  final Color inactiveFgColor;
+  final Color? inactiveFgColor;
 
   /// List of labels
   final List<String> labels;
 
   /// List of icons
-  final List<IconData> icons;
+  final List<IconData>? icons;
 
   /// List of active foreground colors
-  final List<Color> activeBgColors;
+  final List<Color>? activeBgColors;
 
   /// Minimum switch width
   final double minWidth;
@@ -43,7 +43,7 @@ class ToggleSwitch extends StatefulWidget {
   final double iconSize;
 
   /// OnToggle function
-  final OnToggle onToggle;
+  final OnToggle? onToggle;
 
   // Change selection on tap
   final bool changeOnTap;
@@ -52,8 +52,8 @@ class ToggleSwitch extends StatefulWidget {
   int initialLabelIndex;
 
   ToggleSwitch({
-    Key key,
-    @required this.labels,
+    Key? key,
+    required this.labels,
     this.activeBgColor,
     this.activeFgColor,
     this.inactiveBgColor,
@@ -77,16 +77,16 @@ class ToggleSwitch extends StatefulWidget {
 class _ToggleSwitchState extends State<ToggleSwitch>
     with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   /// Active background color
-  Color activeBgColor;
+  Color? activeBgColor;
 
   /// Active foreground color
-  Color activeFgColor;
+  Color? activeFgColor;
 
   /// Inactive background color
-  Color inactiveBgColor;
+  Color? inactiveBgColor;
 
   /// Inctive foreground color
-  Color inactiveFgColor;
+  Color? inactiveFgColor;
 
   /// Maintain selection state.
   @override
@@ -103,7 +103,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
     /// Assigns active foreground color to default accent text theme color if it's null/not provided.
     activeFgColor = widget.activeFgColor == null
-        ? Theme.of(context).accentTextTheme.bodyText1.color
+        ? Theme.of(context).accentTextTheme.bodyText1!.color
         : widget.activeFgColor;
 
     /// Assigns inactive background color to default disabled theme color if it's null/not provided.
@@ -113,7 +113,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
     /// Assigns inactive foreground color to default text theme color if it's null/not provided.
     inactiveFgColor = widget.inactiveFgColor == null
-        ? Theme.of(context).textTheme.bodyText1.color
+        ? Theme.of(context).textTheme.bodyText1!.color
         : widget.inactiveFgColor;
 
     return ClipRRect(
@@ -134,7 +134,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             final fgColor = active ? activeFgColor : inactiveFgColor;
 
             /// Default background color
-            var bgColor = Colors.transparent;
+            Color? bgColor = Colors.transparent;
 
             /// Changes background color if current index is active.
             ///
@@ -143,7 +143,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             if (active) {
               bgColor = widget.activeBgColors == null
                   ? activeBgColor
-                  : widget.activeBgColors[index ~/ 2];
+                  : widget.activeBgColors![index ~/ 2];
             }
 
             if (index % 2 == 1) {
@@ -179,7 +179,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
-                              widget.icons[index ~/ 2],
+                              widget.icons![index ~/ 2],
                               color: fgColor,
                               size: widget.iconSize >
                                       (_calculateWidth(widget.minWidth) / 3)
@@ -216,7 +216,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       setState(() => widget.initialLabelIndex = index);
     }
     if (widget.onToggle != null) {
-      widget.onToggle(index);
+      widget.onToggle!(index);
     }
   }
 
