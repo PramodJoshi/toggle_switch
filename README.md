@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: "^0.1.8"
+  toggle_switch: "^0.1.9"
 ```
 
 Import it:
@@ -123,6 +123,10 @@ ToggleSwitch(
 ```
 
 ![With icons, custom height and different active background colors](https://media.giphy.com/media/JT8P80R2uNgguIT3i2/giphy.gif)
+
+### setState() inside onToggle:
+
+[Example code with explanation](https://github.com/PramodJoshi/toggle_switch/issues/11#issuecomment-679277018)
 
 ## Credits
 

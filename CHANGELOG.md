@@ -1,3 +1,8 @@
+## 0.1.9
+* Upgraded pre 1.12 flutter embedding in Android for example project ([22d04ea](https://github.com/PramodJoshi/toggle_switch/pull/24/commits/22d04ea4b9ffa83a8d0764d2d8a7e45923888b40)).
+* Enabled AndroidX support for example project ([3b62b21](https://github.com/PramodJoshi/toggle_switch/pull/24/commits/3b62b217222a8a7d7d243b4ff7211a7867764650)).
+* Migrated to strict null safety ([bb24959](https://github.com/PramodJoshi/toggle_switch/pull/24/commits/bb24959b9e95634b411b1159b85eca6fac756db5)).
+    
 ## 0.1.8
 * Added left and right padding. 
 * Added fixes to prevent overflow:

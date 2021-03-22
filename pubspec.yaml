@@ -1,6 +1,6 @@
 name: toggle_switch
 description: Toggle Switch - A simple toggle switch widget. It can be fully customized with desired icons, width, colors, text, corner radius etc. It also maintains selection state.
-version: 0.1.8
+version: 0.1.9
 author: Pramod Joshi <pramod.joshi.contact@gmail.com>
 homepage: https://github.com/PramodJoshi/toggle_switch
 
