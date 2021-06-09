@@ -1,3 +1,29 @@
+## 1.0.0+1
+* Added total switches support:
+    - parameter:
+        - totalSwitches (required, type int)
+* Labels parameter is now optional.
+* Added border color and border width support: 
+    - parameters:
+        - borderColor (optional, type List<Color> for gradient colors support)
+        - borderWidth (optional, type double)
+* Added divider color support:
+    - dividerColor (optional, type Color)
+* Added gradient colors support for active backgrounds:
+    - activeBgColor and activeBgColors now take an array of Color instead of just Color (check examples)
+    - parameters:
+        - activeBgColor (optional, type List<Color>)
+        - activeBgColors (optional, type List<List<Color>>)
+* Added animation support:
+    - parameters:
+        - animate (optional, type bool):
+            - with just animate set to true, default curve = Curves.easeIn
+        - curve (optional, type Curve):
+            - animate must be set to true when using custom curve
+* Added new active switch style based on corner radius:
+    - parameter:
+        - radiusStyle (optional, type bool)
+
 ## 0.1.9
 * Upgraded pre 1.12 flutter embedding in Android for example project ([22d04ea](https://github.com/PramodJoshi/toggle_switch/pull/24/commits/22d04ea4b9ffa83a8d0764d2d8a7e45923888b40)).
 * Enabled AndroidX support for example project ([3b62b21](https://github.com/PramodJoshi/toggle_switch/pull/24/commits/3b62b217222a8a7d7d243b4ff7211a7867764650)).
