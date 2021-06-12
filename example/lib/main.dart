@@ -57,20 +57,23 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      'With icons and text:',
+                      'With text or icon:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   ToggleSwitch(
                     minWidth: 90.0,
                     cornerRadius: 20.0,
-                    activeBgColor: [Colors.cyan],
+                    activeBgColors: [
+                      [Colors.cyan],
+                      [Colors.redAccent]
+                    ],
                     activeFgColor: Colors.white,
                     inactiveBgColor: Colors.grey,
                     inactiveFgColor: Colors.white,
                     totalSwitches: 2,
-                    labels: ['YES', 'NO'],
-                    icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+                    labels: ['YES', ''],
+                    icons: [null, FontAwesomeIcons.times],
                     onToggle: (index) {
                       print('switched to: $index');
                     },
@@ -233,6 +236,35 @@ class MyApp extends StatelessWidget {
                     totalSwitches: 2,
                     labels: ['True', 'False'],
                     radiusStyle: true,
+                    onToggle: (index) {
+                      print('switched to: $index');
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'With custom text styles:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ToggleSwitch(
+                    minWidth: 90.0,
+                    cornerRadius: 20.0,
+                    inactiveFgColor: Colors.white,
+                    initialLabelIndex: 1,
+                    totalSwitches: 3,
+                    labels: ['Normal', 'Bold', 'Italic'],
+                    customTextStyles: [
+                      null,
+                      TextStyle(
+                          color: Colors.brown,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w900),
+                      TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontStyle: FontStyle.italic)
+                    ],
                     onToggle: (index) {
                       print('switched to: $index');
                     },

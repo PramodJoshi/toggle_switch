@@ -31,10 +31,13 @@ class ToggleSwitch extends StatefulWidget {
   final int totalSwitches;
 
   /// List of icons
-  final List<IconData>? icons;
+  final List<IconData?>? icons;
 
   /// List of active foreground colors
-  final List<List<Color>>? activeBgColors;
+  final List<List<Color>?>? activeBgColors;
+
+  /// List of custom text styles
+  final List<TextStyle?>? customTextStyles;
 
   /// Minimum switch width
   final double minWidth;
@@ -91,6 +94,7 @@ class ToggleSwitch extends StatefulWidget {
     this.changeOnTap = true,
     this.icons,
     this.activeBgColors,
+    this.customTextStyles,
     this.animate = false,
     this.curve = Curves.easeIn,
     this.radiusStyle = false,
@@ -206,7 +210,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               if (active) {
                 bgColor = widget.activeBgColors == null
                     ? activeBgColor
-                    : widget.activeBgColors![index ~/ 2];
+                    : (widget.activeBgColors![index ~/ 2] ?? activeBgColor);
               }
 
               if (index % 2 == 1) {
@@ -234,6 +238,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                       bottomRight: Radius.circular(widget.cornerRadius));
                 }
 
+                var textStyle = widget.customTextStyles != null &&
+                        widget.customTextStyles![index ~/ 2] != null
+                    ? widget.customTextStyles![index ~/ 2]
+                    : TextStyle(
+                        color: fgColor,
+                        fontSize: widget.fontSize,
+                      );
+
                 /// Returns switch item
                 return GestureDetector(
                   onTap: () => _handleOnTap(index ~/ 2),
@@ -260,32 +272,31 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                     child: widget.icons == null
                         ? Text(
                             widget.labels?[index ~/ 2] ?? '',
-                            style: TextStyle(
-                              color: fgColor,
-                              fontSize: widget.fontSize,
-                            ),
+                            style: textStyle,
                             overflow: TextOverflow.ellipsis,
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Icon(
-                                widget.icons![index ~/ 2],
-                                color: fgColor,
-                                size: widget.iconSize >
-                                        (_calculateWidth(widget.minWidth) / 3)
-                                    ? (_calculateWidth(widget.minWidth)) / 3
-                                    : widget.iconSize,
-                              ),
+                              widget.icons![index ~/ 2] != null
+                                  ? Icon(
+                                      widget.icons![index ~/ 2],
+                                      color: fgColor,
+                                      size: widget.iconSize >
+                                              (_calculateWidth(
+                                                      widget.minWidth) /
+                                                  3)
+                                          ? (_calculateWidth(widget.minWidth)) /
+                                              3
+                                          : widget.iconSize,
+                                    )
+                                  : Container(),
                               Flexible(
                                 child: Container(
                                   padding: const EdgeInsets.only(left: 5.0),
                                   child: Text(
                                     widget.labels?[index ~/ 2] ?? '',
-                                    style: TextStyle(
-                                      color: fgColor,
-                                      fontSize: widget.fontSize,
-                                    ),
+                                    style: textStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

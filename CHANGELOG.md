@@ -1,3 +1,11 @@
+## 1.1.0
+* Added custom text styles support:
+    - parameter:
+        - customTextStyles (optional, type List<TextStyle>)
+    - text style can now be configured for individual switches
+* Added text or icon support:
+    - icons parameter now accepts null value (check examples)
+
 ## 1.0.0+1
 * Added total switches support:
     - parameter:

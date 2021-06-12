@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: "^1.0.0+1"
+  toggle_switch: ^1.1.0
 ```
 
 Import it:
@@ -58,26 +58,26 @@ ToggleSwitch(
 
 ![Basic toggle switch with custom height and font size](https://media.giphy.com/media/Jrf2KLuWJVaB4cIwlz/giphy.gif)
 
-### With icons and text
+### With text or icon
 
 ```dart
 ToggleSwitch(
   minWidth: 90.0,
   cornerRadius: 20.0,
-  activeBgColor: [Colors.cyan],
+  activeBgColors: [[Colors.cyan], [Colors.redAccent]],
   activeFgColor: Colors.white,
   inactiveBgColor: Colors.grey,
   inactiveFgColor: Colors.white,
   totalSwitches: 2,
-  labels: ['YES', 'NO'],
-  icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+  labels: ['YES', ''],
+  icons: [null, FontAwesomeIcons.times],
   onToggle: (index) {
     print('switched to: $index');
   },
 ),
 ```
 
-![With icons and text](https://media.giphy.com/media/SwyiW7VtVf4z1UZviS/giphy.gif)
+![With text or icon](https://media.giphy.com/media/tD5PXdXS6O0Xgb1oMu/giphy.gif)
 
 ### With icons, text and different active background colors
 
@@ -208,6 +208,35 @@ ToggleSwitch(
 ```
 
 ![With radius style](https://media.giphy.com/media/GIhOLGT1kOdz9wUQ4Y/giphy.gif)
+
+### With custom text styles
+
+```dart
+ToggleSwitch(
+  minWidth: 90.0,
+  cornerRadius: 20.0,
+  inactiveFgColor: Colors.white,
+  initialLabelIndex: 1,
+  totalSwitches: 3,
+  labels: ['Normal', 'Bold', 'Italic'],
+  customTextStyles: [
+    null,
+    TextStyle(
+        color: Colors.brown,
+        fontSize: 18.0,
+        fontWeight: FontWeight.w900),
+    TextStyle(
+        color: Colors.black,
+        fontSize: 16.0,
+        fontStyle: FontStyle.italic)
+  ],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
+),
+```
+
+![With custom text styles](https://media.giphy.com/media/mpNWeNpynLMTbNlE23/giphy.gif)
 
 ### setState() inside onToggle
 
