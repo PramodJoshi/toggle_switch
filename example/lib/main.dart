@@ -207,10 +207,10 @@ class MyApp extends StatelessWidget {
                       [Colors.black45, Colors.black26],
                       [Colors.yellow, Colors.orange]
                     ],
-                    animate:
-                        true, // with just animate set to true, default curve = Curves.easeIn
-                    curve: Curves
-                        .bounceInOut, // animate must be set to true when using custom curve
+                    animate: true,
+                    // with just animate set to true, default curve = Curves.easeIn
+                    curve: Curves.bounceInOut,
+                    // animate must be set to true when using custom curve
                     onToggle: (index) {
                       print('switched to: $index');
                     },
@@ -264,6 +264,46 @@ class MyApp extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 16.0,
                           fontStyle: FontStyle.italic)
+                    ],
+                    onToggle: (index) {
+                      print('switched to: $index');
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'With custom icons:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ToggleSwitch(
+                    minWidth: 90.0,
+                    minHeight: 90.0,
+                    cornerRadius: 20.0,
+                    activeBgColors: [
+                      [Color(0xfffdbb0a)],
+                      [Colors.black54],
+                      [Colors.white54]
+                    ],
+                    inactiveFgColor: Colors.white,
+                    initialLabelIndex: 2,
+                    totalSwitches: 3,
+                    customIcons: [
+                      Icon(
+                        FontAwesomeIcons.ccVisa,
+                        color: Color(0xff1a1f71),
+                        size: 55.0,
+                      ),
+                      Icon(
+                        FontAwesomeIcons.ccMastercard,
+                        color: Color(0xffF79E1B),
+                        size: 55.0,
+                      ),
+                      Icon(
+                        FontAwesomeIcons.ccAmex,
+                        color: Color(0xff27AEE3),
+                        size: 55.0,
+                      )
                     ],
                     onToggle: (index) {
                       print('switched to: $index');

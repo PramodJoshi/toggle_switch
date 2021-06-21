@@ -1,6 +1,7 @@
 //Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 typedef OnToggle = void Function(int index);
 
@@ -38,6 +39,9 @@ class ToggleSwitch extends StatefulWidget {
 
   /// List of custom text styles
   final List<TextStyle?>? customTextStyles;
+
+  /// List of custom icons
+  final List<Icon?>? customIcons;
 
   /// Minimum switch width
   final double minWidth;
@@ -95,6 +99,7 @@ class ToggleSwitch extends StatefulWidget {
     this.icons,
     this.activeBgColors,
     this.customTextStyles,
+    this.customIcons,
     this.animate = false,
     this.curve = Curves.easeIn,
     this.radiusStyle = false,
@@ -238,6 +243,29 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                       bottomRight: Radius.circular(widget.cornerRadius));
                 }
 
+                /// Assigns empty widget if icon is null
+                /// Calculates icon's size to prevent overflow
+                var icon =
+                    widget.icons != null && widget.icons![index ~/ 2] != null
+                        ? Icon(
+                            widget.icons![index ~/ 2],
+                            color: fgColor,
+                            size: widget.iconSize >
+                                    (_calculateWidth(widget.minWidth) / 3)
+                                ? (_calculateWidth(widget.minWidth)) / 3
+                                : widget.iconSize,
+                          )
+                        : Container();
+
+                /// Assigns custom icon if available
+                /// Overwrites icons passed via icons:
+                if (widget.customIcons != null &&
+                    widget.customIcons![index ~/ 2] != null) {
+                  icon = widget.customIcons![index ~/ 2]!;
+                }
+
+                /// Assigns custom text styles if available.
+                /// Assigns default text style if custom text style is not available.
                 var textStyle = widget.customTextStyles != null &&
                         widget.customTextStyles![index ~/ 2] != null
                     ? widget.customTextStyles![index ~/ 2]
@@ -269,40 +297,23 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                     ),
                     duration: Duration(milliseconds: widget.animate ? 800 : 0),
                     curve: widget.curve,
-                    child: widget.icons == null
-                        ? Text(
-                            widget.labels?[index ~/ 2] ?? '',
-                            style: textStyle,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              widget.icons![index ~/ 2] != null
-                                  ? Icon(
-                                      widget.icons![index ~/ 2],
-                                      color: fgColor,
-                                      size: widget.iconSize >
-                                              (_calculateWidth(
-                                                      widget.minWidth) /
-                                                  3)
-                                          ? (_calculateWidth(widget.minWidth)) /
-                                              3
-                                          : widget.iconSize,
-                                    )
-                                  : Container(),
-                              Flexible(
-                                child: Container(
-                                  padding: const EdgeInsets.only(left: 5.0),
-                                  child: Text(
-                                    widget.labels?[index ~/ 2] ?? '',
-                                    style: textStyle,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                            ],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        icon,
+                        Flexible(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: (icon is Container) ? 0.0 : 5.0),
+                            child: Text(
+                              widget.labels?[index ~/ 2] ?? '',
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }

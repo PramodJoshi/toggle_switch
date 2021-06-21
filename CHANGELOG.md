@@ -1,3 +1,9 @@
+## 1.2.0
+* Added custom icons support:
+    - parameter:
+        - customIcons (optional, type List<Icon>)
+    - customIcons will overwrite 'icons:'
+    
 ## 1.1.0
 * Added custom text styles support:
     - parameter:

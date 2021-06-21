@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^1.1.0
+  toggle_switch: ^1.2.0
 ```
 
 Import it:
@@ -237,6 +237,46 @@ ToggleSwitch(
 ```
 
 ![With custom text styles](https://media.giphy.com/media/mpNWeNpynLMTbNlE23/giphy.gif)
+
+### With custom icons
+
+```dart
+ToggleSwitch(
+    minWidth: 90.0,
+    minHeight: 90.0,
+    cornerRadius: 20.0,
+    activeBgColors: [
+        [Color(0xfffdbb0a)],
+        [Colors.black54],
+        [Colors.white54]
+    ],
+    inactiveFgColor: Colors.white,
+    initialLabelIndex: 2,
+    totalSwitches: 3,
+    customIcons: [
+        Icon(
+            FontAwesomeIcons.ccVisa,
+            color: Color(0xff1a1f71),
+            size: 55.0,
+        ),
+        Icon(
+            FontAwesomeIcons.ccMastercard,
+            color: Color(0xffF79E1B),
+            size: 55.0,
+        ),
+        Icon(
+            FontAwesomeIcons.ccAmex,
+            color: Color(0xff27AEE3),
+            size: 55.0,
+        )
+    ],
+    onToggle: (index) {
+        print('switched to: $index');
+    },
+),
+```
+
+![With custom icons](https://media.giphy.com/media/VZFytiPYc7CssuDzJS/giphy.gif)
 
 ### setState() inside onToggle
 
