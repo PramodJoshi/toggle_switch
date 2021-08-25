@@ -326,9 +326,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Handles selection
   void _handleOnTap(int index) async {
-    if (widget.changeOnTap) {
-      setState(() => widget.initialLabelIndex = index);
-    }
+    setState(() => widget.initialLabelIndex = index);
     if (widget.onToggle != null) {
       widget.onToggle!(index);
     }
