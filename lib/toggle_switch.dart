@@ -219,8 +219,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               }
 
               if (index % 2 == 1) {
-                final activeDivider =
-                    active || (widget.initialLabelIndex !=null && index ~/ 2 == widget.initialLabelIndex! - 1);
+                final activeDivider = active ||
+                    (widget.initialLabelIndex != null &&
+                        index ~/ 2 == widget.initialLabelIndex! - 1);
 
                 /// Returns item divider
                 return Container(
