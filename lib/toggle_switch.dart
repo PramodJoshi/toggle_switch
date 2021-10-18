@@ -76,8 +76,8 @@ class ToggleSwitch extends StatefulWidget {
   /// Animation curve
   final Curve curve;
 
-  /// Initial label index
-  int initialLabelIndex;
+  /// Initial label index, set to null for no chosen initial value (all options inactive)
+  int? initialLabelIndex;
 
   ToggleSwitch({
     Key? key,
@@ -92,7 +92,7 @@ class ToggleSwitch extends StatefulWidget {
     this.inactiveFgColor,
     this.onToggle,
     this.cornerRadius = 8.0,
-    this.initialLabelIndex = 0,
+    this.initialLabelIndex,
     this.minWidth = 72.0,
     this.minHeight = 40.0,
     this.changeOnTap = true,
@@ -196,9 +196,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(widget.totalSwitches * 2 - 1, (index) {
-              /// Active if index matches current
-              final active = index ~/ 2 == widget.initialLabelIndex;
 
+                /// Active if index matches current
+                final active = index ~/ 2 == widget.initialLabelIndex;
               /// Assigns foreground color based on active status.
               ///
               /// Sets active foreground color if current index is active.
@@ -220,7 +220,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
               if (index % 2 == 1) {
                 final activeDivider =
-                    active || index ~/ 2 == widget.initialLabelIndex - 1;
+                    active || (widget.initialLabelIndex !=null && index ~/ 2 == widget.initialLabelIndex! - 1);
 
                 /// Returns item divider
                 return Container(
