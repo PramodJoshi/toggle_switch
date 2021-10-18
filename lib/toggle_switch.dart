@@ -196,9 +196,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(widget.totalSwitches * 2 - 1, (index) {
+              /// Active if index matches current
+              final active = index ~/ 2 == widget.initialLabelIndex;
 
-                /// Active if index matches current
-                final active = index ~/ 2 == widget.initialLabelIndex;
               /// Assigns foreground color based on active status.
               ///
               /// Sets active foreground color if current index is active.
