@@ -76,8 +76,8 @@ class ToggleSwitch extends StatefulWidget {
   /// Animation curve
   final Curve curve;
 
-  /// Initial label index
-  int initialLabelIndex;
+  /// Initial label index, set to null for no chosen initial value (all options inactive)
+  int? initialLabelIndex;
 
   ToggleSwitch({
     Key? key,
@@ -219,8 +219,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               }
 
               if (index % 2 == 1) {
-                final activeDivider =
-                    active || index ~/ 2 == widget.initialLabelIndex - 1;
+                final activeDivider = active ||
+                    (widget.initialLabelIndex != null &&
+                        index ~/ 2 == widget.initialLabelIndex! - 1);
 
                 /// Returns item divider
                 return Container(
