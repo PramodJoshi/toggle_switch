@@ -79,33 +79,36 @@ class ToggleSwitch extends StatefulWidget {
   /// Initial label index, set to null for no chosen initial value (all options inactive)
   int? initialLabelIndex;
 
-  ToggleSwitch({
-    Key? key,
-    required this.totalSwitches,
-    this.labels,
-    this.borderColor,
-    this.borderWidth,
-    this.dividerColor = Colors.white30,
-    this.activeBgColor,
-    this.activeFgColor,
-    this.inactiveBgColor,
-    this.inactiveFgColor,
-    this.onToggle,
-    this.cornerRadius = 8.0,
-    this.initialLabelIndex = 0,
-    this.minWidth = 72.0,
-    this.minHeight = 40.0,
-    this.changeOnTap = true,
-    this.icons,
-    this.activeBgColors,
-    this.customTextStyles,
-    this.customIcons,
-    this.animate = false,
-    this.curve = Curves.easeIn,
-    this.radiusStyle = false,
-    this.fontSize = 14.0,
-    this.iconSize = 17.0,
-  }) : super(key: key);
+  bool doubleTapDisable;
+
+  ToggleSwitch(
+      {Key? key,
+      required this.totalSwitches,
+      this.labels,
+      this.borderColor,
+      this.borderWidth,
+      this.dividerColor = Colors.white30,
+      this.activeBgColor,
+      this.activeFgColor,
+      this.inactiveBgColor,
+      this.inactiveFgColor,
+      this.onToggle,
+      this.cornerRadius = 8.0,
+      this.initialLabelIndex = 0,
+      this.minWidth = 72.0,
+      this.minHeight = 40.0,
+      this.changeOnTap = true,
+      this.icons,
+      this.activeBgColors,
+      this.customTextStyles,
+      this.customIcons,
+      this.animate = false,
+      this.curve = Curves.easeIn,
+      this.radiusStyle = false,
+      this.fontSize = 14.0,
+      this.iconSize = 17.0,
+      this.doubleTapDisable = false})
+      : super(key: key);
 
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
@@ -328,7 +331,11 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Handles selection
   void _handleOnTap(int index) async {
     if (widget.changeOnTap) {
-      setState(() => widget.initialLabelIndex = index);
+      if (widget.doubleTapDisable && widget.initialLabelIndex == index) {
+        setState(() => widget.initialLabelIndex = null);
+      } else {
+        setState(() => widget.initialLabelIndex = index);
+      }
     }
     if (widget.onToggle != null) {
       widget.onToggle!(index);
