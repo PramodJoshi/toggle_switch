@@ -1,3 +1,13 @@
+## 1.3.0
+* Added null support for initialLabelIndex ([PR 39](https://github.com/PramodJoshi/toggle_switch/pull/39/commits)).
+* Added double tap support to de-select/de-activate active switch ([PR 41](https://github.com/PramodJoshi/toggle_switch/pull/41)):
+    - parameter:
+        - doubleTapDisable (optional, type bool - default false)
+* Added animation duration support:
+    - parameter:
+        - animationDuration (optional, type int - default 800)
+* Added package test
+    
 ## 1.2.0
 * Added custom icons support:
     - parameter:

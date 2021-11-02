@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^1.2.0
+  toggle_switch: ^1.3.0
 ```
 
 Import it:

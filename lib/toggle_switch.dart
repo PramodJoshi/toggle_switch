@@ -70,6 +70,9 @@ class ToggleSwitch extends StatefulWidget {
   /// Set animation
   final bool animate;
 
+  /// Set animation duration
+  final int animationDuration;
+
   /// Set radius style
   final bool radiusStyle;
 
@@ -79,6 +82,7 @@ class ToggleSwitch extends StatefulWidget {
   /// Initial label index, set to null for no chosen initial value (all options inactive)
   int? initialLabelIndex;
 
+  /// Tap active switch to de-activate/de-select
   bool doubleTapDisable;
 
   ToggleSwitch(
@@ -103,6 +107,7 @@ class ToggleSwitch extends StatefulWidget {
       this.customTextStyles,
       this.customIcons,
       this.animate = false,
+      this.animationDuration = 800,
       this.curve = Curves.easeIn,
       this.radiusStyle = false,
       this.fontSize = 14.0,
@@ -149,7 +154,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
     /// Assigns active foreground color to default accent text theme color if it's null/not provided.
     activeFgColor = widget.activeFgColor == null
-        ? Theme.of(context).accentTextTheme.bodyText1!.color
+        ? Theme.of(context).primaryTextTheme.bodyText1!.color
         : widget.activeFgColor;
 
     /// Assigns inactive background color to default disabled theme color if it's null/not provided.
@@ -299,7 +304,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    duration: Duration(milliseconds: widget.animate ? 800 : 0),
+                    duration: Duration(
+                        milliseconds:
+                            widget.animate ? widget.animationDuration : 0),
                     curve: widget.curve,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
