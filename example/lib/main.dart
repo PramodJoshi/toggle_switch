@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
                   ),
                   ToggleSwitch(
                     initialLabelIndex: 0,
+                    doubleTapDisable: true,
                     totalSwitches: 3,
                     labels: ['America', 'Canada', 'Mexico'],
                     onToggle: (index) {
@@ -113,8 +114,9 @@ class MyApp extends StatelessWidget {
                   ToggleSwitch(
                     minWidth: 90.0,
                     minHeight: 70.0,
-                    initialLabelIndex: 2,
+                    initialLabelIndex: null,
                     cornerRadius: 20.0,
+                    doubleTapDisable: true,
                     activeFgColor: Colors.white,
                     inactiveBgColor: Colors.grey,
                     inactiveFgColor: Colors.white,
