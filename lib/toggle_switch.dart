@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-typedef OnToggle = void Function(int index);
+typedef OnToggle = void Function(int? index);
 
 // ignore: must_be_immutable
 class ToggleSwitch extends StatefulWidget {
@@ -337,15 +337,21 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Handles selection
   void _handleOnTap(int index) async {
+    bool notifyNull = false;
     if (widget.changeOnTap) {
       if (widget.doubleTapDisable && widget.initialLabelIndex == index) {
         setState(() => widget.initialLabelIndex = null);
+        notifyNull = true;
       } else {
         setState(() => widget.initialLabelIndex = index);
       }
     }
     if (widget.onToggle != null) {
-      widget.onToggle!(index);
+      if (notifyNull) {
+        widget.onToggle!(null);
+      } else {
+        widget.onToggle!(index);
+      }
     }
   }
 
