@@ -43,6 +43,9 @@ class ToggleSwitch extends StatefulWidget {
   /// List of custom icons
   final List<Icon?>? customIcons;
 
+  /// List of custom widths
+  final List<double>? customWidths;
+
   /// Minimum switch width
   final double minWidth;
 
@@ -76,6 +79,9 @@ class ToggleSwitch extends StatefulWidget {
   /// Set radius style
   final bool radiusStyle;
 
+  /// Confirm if text direction is set right-to-left
+  final bool textDirectionRTL;
+
   /// Animation curve
   final Curve curve;
 
@@ -106,10 +112,12 @@ class ToggleSwitch extends StatefulWidget {
       this.activeBgColors,
       this.customTextStyles,
       this.customIcons,
+      this.customWidths,
       this.animate = false,
       this.animationDuration = 800,
       this.curve = Curves.easeIn,
       this.radiusStyle = false,
+      this.textDirectionRTL = false,
       this.fontSize = 14.0,
       this.iconSize = 17.0,
       this.doubleTapDisable = false})
@@ -242,14 +250,26 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 /// Matches corner radius of active switch to that of border
                 var cornerRadius;
                 if (index == 0) {
-                  cornerRadius = BorderRadius.only(
-                      topLeft: Radius.circular(widget.cornerRadius),
-                      bottomLeft: Radius.circular(widget.cornerRadius));
+                  /// Checks if text direction is set right-to-left and
+                  /// assigns corner radius accordingly.
+                  cornerRadius = widget.textDirectionRTL
+                      ? BorderRadius.only(
+                          topRight: Radius.circular(widget.cornerRadius),
+                          bottomRight: Radius.circular(widget.cornerRadius))
+                      : BorderRadius.only(
+                          topLeft: Radius.circular(widget.cornerRadius),
+                          bottomLeft: Radius.circular(widget.cornerRadius));
                 }
                 if (index ~/ 2 == widget.totalSwitches - 1) {
-                  cornerRadius = BorderRadius.only(
-                      topRight: Radius.circular(widget.cornerRadius),
-                      bottomRight: Radius.circular(widget.cornerRadius));
+                  /// Checks if text direction is set right-to-left and
+                  /// assigns corner radius accordingly.
+                  cornerRadius = widget.textDirectionRTL
+                      ? BorderRadius.only(
+                          topLeft: Radius.circular(widget.cornerRadius),
+                          bottomLeft: Radius.circular(widget.cornerRadius))
+                      : BorderRadius.only(
+                          topRight: Radius.circular(widget.cornerRadius),
+                          bottomRight: Radius.circular(widget.cornerRadius));
                 }
 
                 /// Assigns empty widget if icon is null
@@ -260,8 +280,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                             widget.icons![index ~/ 2],
                             color: fgColor,
                             size: widget.iconSize >
-                                    (_calculateWidth(widget.minWidth) / 3)
-                                ? (_calculateWidth(widget.minWidth)) / 3
+                                    (_calculateWidth(index ~/ 2) / 3)
+                                ? (_calculateWidth(index ~/ 2)) / 3
                                 : widget.iconSize,
                           )
                         : Container();
@@ -288,8 +308,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   onTap: () => _handleOnTap(index ~/ 2),
                   child: AnimatedContainer(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                    constraints: BoxConstraints(
-                        maxWidth: _calculateWidth(widget.minWidth)),
+                    constraints:
+                        BoxConstraints(maxWidth: _calculateWidth(index ~/ 2)),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: widget.radiusStyle
@@ -356,7 +376,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   }
 
   /// Calculates width to prevent overflow by taking screen width into account.
-  double _calculateWidth(double minWidth) {
+  double _calculateWidth(int index) {
     /// Extra width to prevent overflow and add padding
     double extraWidth = 0.10 * widget.totalSwitches;
 
@@ -367,8 +387,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     ///
     /// Returns passed minWidth per label if total requested width plus extra width is less than max screen width.
     /// Returns calculated width to fit within the max screen width if total requested width plus extra width is more than max screen width.
-    return (widget.totalSwitches + extraWidth) * widget.minWidth < screenWidth
-        ? widget.minWidth
+    return (widget.totalSwitches + extraWidth) *
+                (widget.customWidths != null
+                    ? widget.customWidths![index]
+                    : widget.minWidth) <
+            screenWidth
+        ? (widget.customWidths != null
+            ? widget.customWidths![index]
+            : widget.minWidth)
         : screenWidth / (widget.totalSwitches + extraWidth);
   }
 }

@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^1.3.0
+  toggle_switch: ^1.4.0
 ```
 
 Import it:
@@ -58,11 +58,11 @@ ToggleSwitch(
 
 ![Basic toggle switch with custom height and font size](https://media.giphy.com/media/Jrf2KLuWJVaB4cIwlz/giphy.gif)
 
-### With text or icon
+### With text or icon and custom widths
 
 ```dart
 ToggleSwitch(
-  minWidth: 90.0,
+  customWidths: [90.0, 50.0],
   cornerRadius: 20.0,
   activeBgColors: [[Colors.cyan], [Colors.redAccent]],
   activeFgColor: Colors.white,
@@ -77,7 +77,7 @@ ToggleSwitch(
 ),
 ```
 
-![With text or icon](https://media.giphy.com/media/tD5PXdXS6O0Xgb1oMu/giphy.gif)
+![With text or icon and custom widths](https://media.giphy.com/media/gdPIxlxfLfrCX62GTa/giphy.gif)
 
 ### With icons, text and different active background colors
 
@@ -209,14 +209,15 @@ ToggleSwitch(
 
 ![With radius style](https://media.giphy.com/media/GIhOLGT1kOdz9wUQ4Y/giphy.gif)
 
-### With custom text styles
+### With custom text styles, null initial label, double tap to de-activate
 
 ```dart
 ToggleSwitch(
   minWidth: 90.0,
   cornerRadius: 20.0,
   inactiveFgColor: Colors.white,
-  initialLabelIndex: 1,
+  initialLabelIndex: null,
+  doubleTapDisable: true, // re-tap active widget to de-activate
   totalSwitches: 3,
   labels: ['Normal', 'Bold', 'Italic'],
   customTextStyles: [
@@ -236,47 +237,69 @@ ToggleSwitch(
 ),
 ```
 
-![With custom text styles](https://media.giphy.com/media/mpNWeNpynLMTbNlE23/giphy.gif)
+![With custom text styles, null initial label, double tap to de-activate](https://media.giphy.com/media/AtvWNvtzTlIHvuleur/giphy.gif)
 
 ### With custom icons
 
 ```dart
 ToggleSwitch(
-    minWidth: 90.0,
-    minHeight: 90.0,
-    cornerRadius: 20.0,
-    activeBgColors: [
-        [Color(0xfffdbb0a)],
-        [Colors.black54],
-        [Colors.white54]
-    ],
-    inactiveFgColor: Colors.white,
-    initialLabelIndex: 2,
-    totalSwitches: 3,
-    customIcons: [
-        Icon(
-            FontAwesomeIcons.ccVisa,
-            color: Color(0xff1a1f71),
-            size: 55.0,
-        ),
-        Icon(
-            FontAwesomeIcons.ccMastercard,
-            color: Color(0xffF79E1B),
-            size: 55.0,
-        ),
-        Icon(
-            FontAwesomeIcons.ccAmex,
-            color: Color(0xff27AEE3),
-            size: 55.0,
-        )
-    ],
-    onToggle: (index) {
-        print('switched to: $index');
-    },
+  minWidth: 90.0,
+  minHeight: 90.0,
+  cornerRadius: 20.0,
+  activeBgColors: [
+    [Color(0xfffdbb0a)],
+    [Colors.black54],
+    [Colors.white54]
+  ],
+  inactiveFgColor: Colors.white,
+  initialLabelIndex: 2,
+  totalSwitches: 3,
+  customIcons: [
+    Icon(
+      FontAwesomeIcons.ccVisa,
+      color: Color(0xff1a1f71),
+      size: 55.0,
+    ),
+    Icon(
+      FontAwesomeIcons.ccMastercard,
+      color: Color(0xffF79E1B),
+      size: 55.0,
+    ),
+    Icon(
+      FontAwesomeIcons.ccAmex,
+      color: Color(0xff27AEE3),
+      size: 55.0,
+    )
+  ],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
 ),
 ```
 
 ![With custom icons](https://media.giphy.com/media/VZFytiPYc7CssuDzJS/giphy.gif)
+
+### TextDirection.rtl and corner radius
+
+```dart
+// When ToggleSwitch is used with Directionality widget and textDirection is set to TextDirection.rtl (right-to-left), 
+// switches are displayed right to left along with their respective index values. In this case, corner radius of switches aren't set correctly. 
+// To fix this, please use textDirectionRTL parameter and set it to true as shown in the example below. 
+Directionality(
+  textDirection: TextDirection.rtl,
+  child: ToggleSwitch(
+    initialLabelIndex: 0,
+    cornerRadius: 12.0,
+    textDirectionRTL: true,
+    activeFgColor: Colors.white,
+    totalSwitches: 2,
+    labels: ['left', 'right'],
+    onToggle: (index) {
+      print('switched to: $index');
+    },
+  ),
+),
+```
 
 ### setState() inside onToggle
 

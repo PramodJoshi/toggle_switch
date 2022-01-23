@@ -142,4 +142,37 @@ void main() {
     final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
     expect(widget.minWidth, equals(40.0));
   });
+
+  testWidgets('Can set custom widths', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 2,
+            customWidths: [40.0, 50.0],
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.customWidths![1], equals(50.0));
+  });
+
+  testWidgets('Can set default active switch to null',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 2,
+            initialLabelIndex: null,
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.initialLabelIndex, equals(null));
+  });
 }

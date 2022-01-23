@@ -1,3 +1,13 @@
+## 1.4.0
+* Minor bug fix ([PR 44](https://github.com/PramodJoshi/toggle_switch/pull/44)).
+    - return null when active switch is de-activated by re-tapping
+* Added changes to fix radiusStyle bug when text direction is set to TextDirection.rtl
+    - parameter:
+        - textDirectionRTL (optional, type bool - default false)
+* Added custom widths support
+    - parameter:
+        - customWidths (optional, type List<double>)        
+
 ## 1.3.0
 * Added null support for initialLabelIndex ([PR 39](https://github.com/PramodJoshi/toggle_switch/pull/39/commits)).
 * Added double tap support to de-select/de-activate active switch ([PR 41](https://github.com/PramodJoshi/toggle_switch/pull/41)):

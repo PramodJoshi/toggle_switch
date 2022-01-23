@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
                   ),
                   ToggleSwitch(
                     initialLabelIndex: 0,
-                    doubleTapDisable: true,
                     totalSwitches: 3,
                     labels: ['America', 'Canada', 'Mexico'],
                     onToggle: (index) {
@@ -58,12 +57,12 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      'With text or icon:',
+                      'With text or icon and custom widths:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   ToggleSwitch(
-                    minWidth: 90.0,
+                    customWidths: [90.0, 50.0],
                     cornerRadius: 20.0,
                     activeBgColors: [
                       [Colors.cyan],
@@ -114,9 +113,8 @@ class MyApp extends StatelessWidget {
                   ToggleSwitch(
                     minWidth: 90.0,
                     minHeight: 70.0,
-                    initialLabelIndex: null,
+                    initialLabelIndex: 2,
                     cornerRadius: 20.0,
-                    doubleTapDisable: true,
                     activeFgColor: Colors.white,
                     inactiveBgColor: Colors.grey,
                     inactiveFgColor: Colors.white,
@@ -245,7 +243,7 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      'With custom text styles:',
+                      'With custom text styles, null initial label, double tap to de-activate:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -253,7 +251,9 @@ class MyApp extends StatelessWidget {
                     minWidth: 90.0,
                     cornerRadius: 20.0,
                     inactiveFgColor: Colors.white,
-                    initialLabelIndex: 1,
+                    initialLabelIndex: null,
+                    doubleTapDisable:
+                        true, // re-tap active widget to de-activate
                     totalSwitches: 3,
                     labels: ['Normal', 'Bold', 'Italic'],
                     customTextStyles: [
