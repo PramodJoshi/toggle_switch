@@ -81,6 +81,9 @@ class ToggleSwitch extends StatefulWidget {
 
   bool doubleTapDisable;
 
+// Set a border only to the active toggle component
+  Border? activeBorder;
+
   ToggleSwitch(
       {Key? key,
       required this.totalSwitches,
@@ -107,15 +110,15 @@ class ToggleSwitch extends StatefulWidget {
       this.radiusStyle = false,
       this.fontSize = 14.0,
       this.iconSize = 17.0,
-      this.doubleTapDisable = false})
+      this.doubleTapDisable = false,
+      this.activeBorder})
       : super(key: key);
 
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
 }
 
-class _ToggleSwitchState extends State<ToggleSwitch>
-    with AutomaticKeepAliveClientMixin<ToggleSwitch> {
+class _ToggleSwitchState extends State<ToggleSwitch> with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   /// Active background color
   List<Color>? activeBgColor;
 
@@ -287,6 +290,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                         maxWidth: _calculateWidth(widget.minWidth)),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
+                      border: active ? widget.activeBorder : null,
                       borderRadius: widget.radiusStyle
                           ? BorderRadius.all(
                               Radius.circular(widget.cornerRadius))

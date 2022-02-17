@@ -25,6 +25,10 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   ToggleSwitch(
+                    activeBorder: Border.all(
+                      color: Color(0xFFFD5C14),
+                      width: 1,
+                    ),
                     initialLabelIndex: 0,
                     doubleTapDisable: true,
                     totalSwitches: 3,
