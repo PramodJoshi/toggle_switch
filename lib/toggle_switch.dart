@@ -97,6 +97,9 @@ class ToggleSwitch extends StatefulWidget {
   /// Use toggle switch vertically
   final bool isVertical;
 
+  // Set a border only to the active toggle component
+  Border? activeBorder;
+
   ToggleSwitch(
       {Key? key,
         this.totalSwitches,
@@ -128,7 +131,8 @@ class ToggleSwitch extends StatefulWidget {
         this.fontSize = 14.0,
         this.iconSize = 17.0,
         this.doubleTapDisable = false,
-        this.isVertical = false,})
+        this.isVertical = false,
+        this.activeBorder})
       : super(key: key);
 
   @override
@@ -315,6 +319,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                     ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
+                      border: active ? widget.activeBorder : null,
                       borderRadius: widget.radiusStyle
                           ? BorderRadius.all(Radius.circular(widget.cornerRadius))
                           : cornerRadius,
