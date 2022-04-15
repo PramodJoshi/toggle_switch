@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^1.4.0
+  toggle_switch: ^2.0.1
 ```
 
 Import it:
@@ -279,6 +279,80 @@ ToggleSwitch(
 
 ![With custom icons](https://media.giphy.com/media/VZFytiPYc7CssuDzJS/giphy.gif)
 
+### Vertical toggle switch with active border
+
+```dart
+ToggleSwitch(
+  activeBorders: [
+    Border.all(
+      color: Colors.purple,
+      width: 3.0,
+    ),
+    Border.all(
+      color: Colors.yellow.shade700,
+      width: 3.0,
+    ),
+    Border.all(
+      color: Colors.deepOrangeAccent,
+      width: 3.0,
+    ),
+    Border.all(
+      color: Colors.blue.shade500,
+      width: 3.0,
+    ),
+  ],
+  activeFgColor: Colors.black54,
+  isVertical: true,
+  minWidth: 150.0,
+  radiusStyle: true,
+  cornerRadius: 20.0,
+  initialLabelIndex: 2,
+  activeBgColors: [
+    [Colors.purpleAccent],
+    [Colors.yellow],
+    [Colors.orange],
+    [Colors.lightBlueAccent]
+  ],
+  labels: ['Spring', 'Summer', 'Fall', 'Winter'],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
+),
+```
+
+![Vertical toggle switch with active border](https://media.giphy.com/media/eFjXTBhH913cYWWYU3/giphy.gif)
+
+### Custom widths greater than device width
+
+```dart
+SingleChildScrollView(
+  scrollDirection: Axis.horizontal,
+  child: Scrollbar(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: ToggleSwitch(
+        customWidths: [300.0, 100.0, 100.0],
+        cornerRadius: 20.0,
+        activeBgColors: [
+          [Colors.green],
+          [Colors.redAccent],
+          [Colors.blue]
+        ],
+        activeFgColor: Colors.white,
+        inactiveBgColor: Colors.grey,
+        inactiveFgColor: Colors.white,
+        labels: ['Yes, the statement above is true', 'False', 'Other'],
+        onToggle: (index) {
+          print('switched to: $index');
+        },
+      ),
+    ),
+  ),
+),
+```
+
+![Custom widths greater than device width](https://media.giphy.com/media/ZkF9MlIm9y1H9baWrZ/giphy.gif)
+
 ### TextDirection.rtl and corner radius
 
 ```dart
@@ -305,6 +379,6 @@ Directionality(
 
 [Example code with explanation](https://github.com/PramodJoshi/toggle_switch/issues/11#issuecomment-679277018)
 
-## Credits
+## Code Contributors
 
-[Eugene](https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
+[![](https://contrib.rocks/image?repo=PramodJoshi/toggle_switch)](https://github.com/PramodJoshi/toggle_switch/graphs/contributors)

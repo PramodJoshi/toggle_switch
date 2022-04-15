@@ -25,10 +25,6 @@ class MyApp extends StatelessWidget {
                     ),
                   ),
                   ToggleSwitch(
-                    activeBorder: Border.all(
-                      color: Color(0xFFFD5C14),
-                      width: 1,
-                    ),
                     initialLabelIndex: 0,
                     totalSwitches: 3,
                     labels: ['America', 'Canada', 'Mexico'],
@@ -314,6 +310,84 @@ class MyApp extends StatelessWidget {
                     onToggle: (index) {
                       print('switched to: $index');
                     },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'Vertical toggle switch with active border:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ToggleSwitch(
+                    activeBorders: [
+                      Border.all(
+                        color: Colors.purple.shade300,
+                        width: 3.0,
+                      ),
+                      Border.all(
+                        color: Colors.yellow.shade500,
+                        width: 3.0,
+                      ),
+                      Border.all(
+                        color: Colors.orange.shade300,
+                        width: 3.0,
+                      ),
+                      Border.all(
+                        color: Colors.blue.shade300,
+                        width: 3.0,
+                      ),
+                    ],
+                    activeFgColor: Colors.black54,
+                    isVertical: true,
+                    minWidth: 150.0,
+                    radiusStyle: true,
+                    cornerRadius: 20.0,
+                    initialLabelIndex: 2,
+                    activeBgColors: [
+                      [Colors.purple.shade100],
+                      [Colors.yellow.shade100],
+                      [Colors.orange.shade100],
+                      [Colors.blue.shade100]
+                    ],
+                    labels: ['Spring', 'Summer', 'Fall', 'Winter'],
+                    onToggle: (index) {
+                      print('switched to: $index');
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'Custom widths greater than device width:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Scrollbar(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: ToggleSwitch(
+                          customWidths: [300.0, 100.0, 100.0],
+                          cornerRadius: 20.0,
+                          activeBgColors: [
+                            [Colors.green],
+                            [Colors.redAccent],
+                            [Colors.blue]
+                          ],
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          labels: [
+                            'Yes, the statement above is true',
+                            'False',
+                            'Other'
+                          ],
+                          onToggle: (index) {
+                            print('switched to: $index');
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),

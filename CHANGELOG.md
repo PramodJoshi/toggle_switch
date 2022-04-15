@@ -1,3 +1,22 @@
+## 2.0.1
+* Added vertical toggle switch option ([PR 51](https://github.com/PramodJoshi/toggle_switch/pull/51/files)):
+    - parameter:
+        - isVertical (type bool - default false)
+* Added active borders option (Partial implementation from [PR 53](https://github.com/PramodJoshi/toggle_switch/pull/53/files)):
+    - parameter:
+        - activeBorders (optional, type List<Border>)
+    - list with only one Border value will apply that Border to all the active switches
+    - different Border values can be provided for different switches
+* Added divider margin option:
+    - parameter:
+        - dividerMargin (optional, type double - default 8.0)        
+* Made totalSwitches parameter optional. 
+* Added new changes to customTextStyles:
+    - list with only one TextStyle value will apply that TextStyle to all the active switches
+* Added new changes to customWidths:
+    - customWidths can now reflect widths greater than device width
+    - must use horizontal scroll view to prevent overflow
+        
 ## 1.4.0
 * Minor bug fix ([PR 44](https://github.com/PramodJoshi/toggle_switch/pull/44)).
     - return null when active switch is de-activated by re-tapping

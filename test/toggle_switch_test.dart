@@ -175,4 +175,39 @@ void main() {
     final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
     expect(widget.initialLabelIndex, equals(null));
   });
+
+  testWidgets('Can set vertical toggle switch', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 3,
+            isVertical: true,
+            initialLabelIndex: 2,
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.isVertical, equals(true));
+  });
+
+  testWidgets('Can set active borders', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 3,
+            activeBorders: [Border.all(color: Colors.blue, width: 2.0)],
+            initialLabelIndex: 2,
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.activeBorders![0],
+        equals(Border.all(color: Colors.blue, width: 2.0)));
+  });
 }
