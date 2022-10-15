@@ -65,7 +65,7 @@ class ToggleSwitch extends StatefulWidget {
   final double iconSize;
 
   /// Divider margin
-  final double? dividerMargin;
+  final double dividerMargin;
 
   /// Border width
   final double? borderWidth;
@@ -154,13 +154,13 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Inactive background color
   Color? inactiveBgColor;
 
-  /// Inctive foreground color
+  /// Inactive foreground color
   Color? inactiveFgColor;
 
   /// Border color
   List<Color>? borderColor;
 
-  /// Border widtth
+  /// Border width
   double? borderWidth;
 
   /// Maintain selection state.
@@ -242,9 +242,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               /// Sets same active background color for all items if active background colors list is empty.
               /// Sets different active background color for current item by matching index if active background colors list is not empty
               if (active) {
-                bgColor = widget.activeBgColors == null
-                    ? activeBgColor
-                    : (widget.activeBgColors![index ~/ 2] ?? activeBgColor);
+                bgColor = widget.activeBgColors?[index ~/ 2] ?? activeBgColor;
               }
 
               if (index % 2 == 1) {
@@ -261,10 +259,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   margin: widget.isVertical
                       ? EdgeInsets.symmetric(
                           horizontal:
-                              activeDivider ? 0.0 : widget.dividerMargin!)
+                              activeDivider ? 0.0 : widget.dividerMargin)
                       : EdgeInsets.symmetric(
-                          vertical:
-                              activeDivider ? 0.0 : widget.dividerMargin!),
+                          vertical: activeDivider ? 0.0 : widget.dividerMargin),
                 );
               } else {
                 /// Matches corner radius of active switch to that of border
@@ -437,12 +434,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         setState(() => widget.initialLabelIndex = index);
       }
     }
-    if (widget.onToggle != null) {
-      if (notifyNull) {
-        widget.onToggle!(null);
-      } else {
-        widget.onToggle!(index);
-      }
+    if (notifyNull) {
+      widget.onToggle?.call(null);
+    } else {
+      widget.onToggle?.call(index);
     }
   }
 
