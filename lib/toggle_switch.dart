@@ -365,7 +365,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 }
 
                 /// Returns switch item
-                return GestureDetector(
+                return Flexible(child: GestureDetector(
                   onTap: () => _handleOnTap(index ~/ 2),
                   child: AnimatedContainer(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -414,7 +414,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                       ],
                     ),
                   ),
-                );
+                ));
               }
             }),
           ),
