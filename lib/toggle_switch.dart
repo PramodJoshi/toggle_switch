@@ -103,41 +103,45 @@ class ToggleSwitch extends StatefulWidget {
   /// Set a border only to the active toggle component
   List<Border?>? activeBorders;
 
-  ToggleSwitch(
-      {Key? key,
-      this.totalSwitches,
-      this.labels,
-      this.borderColor,
-      this.borderWidth,
-      this.dividerColor = Colors.white30,
-      this.activeBgColor,
-      this.activeFgColor,
-      this.inactiveBgColor,
-      this.inactiveFgColor,
-      this.onToggle,
-      this.cornerRadius = 8.0,
-      this.initialLabelIndex = 0,
-      this.minWidth = 72.0,
-      this.minHeight = 40.0,
-      this.changeOnTap = true,
-      this.icons,
-      this.activeBgColors,
-      this.customTextStyles,
-      this.customIcons,
-      this.customWidths,
-      this.customHeights,
-      this.animate = false,
-      this.animationDuration = 800,
-      this.curve = Curves.easeIn,
-      this.radiusStyle = false,
-      this.textDirectionRTL = false,
-      this.fontSize = 14.0,
-      this.iconSize = 17.0,
-      this.dividerMargin = 8.0,
-      this.doubleTapDisable = false,
-      this.isVertical = false,
-      this.activeBorders})
-      : super(key: key);
+  /// Disable toggle when tap on same status(selected)
+  final bool? disableSameStatusToggle;
+
+  ToggleSwitch({
+    Key? key,
+    this.totalSwitches,
+    this.labels,
+    this.borderColor,
+    this.borderWidth,
+    this.dividerColor = Colors.white30,
+    this.activeBgColor,
+    this.activeFgColor,
+    this.inactiveBgColor,
+    this.inactiveFgColor,
+    this.onToggle,
+    this.cornerRadius = 8.0,
+    this.initialLabelIndex = 0,
+    this.minWidth = 72.0,
+    this.minHeight = 40.0,
+    this.changeOnTap = true,
+    this.icons,
+    this.activeBgColors,
+    this.customTextStyles,
+    this.customIcons,
+    this.customWidths,
+    this.customHeights,
+    this.animate = false,
+    this.animationDuration = 800,
+    this.curve = Curves.easeIn,
+    this.radiusStyle = false,
+    this.textDirectionRTL = false,
+    this.fontSize = 14.0,
+    this.iconSize = 17.0,
+    this.dividerMargin = 8.0,
+    this.doubleTapDisable = false,
+    this.isVertical = false,
+    this.activeBorders,
+    this.disableSameStatusToggle,
+  }) : super(key: key);
 
   @override
   _ToggleSwitchState createState() => _ToggleSwitchState();
@@ -427,6 +431,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   void _handleOnTap(int index) async {
     bool notifyNull = false;
     if (widget.changeOnTap) {
+      if (widget.disableSameStatusToggle == true &&
+          widget.initialLabelIndex == index) {
+        return;
+      }
       if (widget.doubleTapDisable && widget.initialLabelIndex == index) {
         setState(() => widget.initialLabelIndex = null);
         notifyNull = true;
