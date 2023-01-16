@@ -1,8 +1,7 @@
 //Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 typedef OnToggle = void Function(int? index);
 
