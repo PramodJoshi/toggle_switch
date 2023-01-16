@@ -1,7 +1,8 @@
 //Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
 
-import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:flutter/material.dart';
 
 typedef OnToggle = void Function(int? index);
 
@@ -103,7 +104,7 @@ class ToggleSwitch extends StatefulWidget {
   /// Set a border only to the active toggle component
   List<Border?>? activeBorders;
 
-  /// Set the lable to the ceneter
+  /// Set the label to the center
   final bool centerText;
 
   /// Set the long on Two Lines
@@ -162,13 +163,13 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Inactive background color
   Color? inactiveBgColor;
 
-  /// Inctive foreground color
+  /// Inactive foreground color
   Color? inactiveFgColor;
 
   /// Border color
   List<Color>? borderColor;
 
-  /// Border widtth
+  /// Border width
   double? borderWidth;
 
   /// Maintain selection state.
@@ -355,9 +356,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                     return widget.customTextStyles![0]!.copyWith(
                       color: fgColor,
                     );
-                    return widget.customTextStyles![0]!;
                   }
-
                   return widget.customTextStyles![0]!;
                 }
 
