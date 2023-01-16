@@ -65,7 +65,7 @@ class ToggleSwitch extends StatefulWidget {
   final double iconSize;
 
   /// Divider margin
-  final double dividerMargin;
+  final double? dividerMargin;
 
   /// Border width
   final double? borderWidth;
@@ -103,6 +103,12 @@ class ToggleSwitch extends StatefulWidget {
   /// Set a border only to the active toggle component
   List<Border?>? activeBorders;
 
+  /// Set the lable to the ceneter
+  final bool centerText;
+
+  /// Set the long on Two Lines
+  final bool twoLineText;
+
   ToggleSwitch(
       {Key? key,
       this.totalSwitches,
@@ -136,7 +142,9 @@ class ToggleSwitch extends StatefulWidget {
       this.dividerMargin = 8.0,
       this.doubleTapDisable = false,
       this.isVertical = false,
-      this.activeBorders})
+      this.activeBorders,
+      this.centerText = false,
+      this.twoLineText = false})
       : super(key: key);
 
   @override
@@ -154,13 +162,13 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Inactive background color
   Color? inactiveBgColor;
 
-  /// Inactive foreground color
+  /// Inctive foreground color
   Color? inactiveFgColor;
 
   /// Border color
   List<Color>? borderColor;
 
-  /// Border width
+  /// Border widtth
   double? borderWidth;
 
   /// Maintain selection state.
@@ -242,7 +250,9 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               /// Sets same active background color for all items if active background colors list is empty.
               /// Sets different active background color for current item by matching index if active background colors list is not empty
               if (active) {
-                bgColor = widget.activeBgColors?[index ~/ 2] ?? activeBgColor;
+                bgColor = widget.activeBgColors == null
+                    ? activeBgColor
+                    : (widget.activeBgColors![index ~/ 2] ?? activeBgColor);
               }
 
               if (index % 2 == 1) {
@@ -259,9 +269,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   margin: widget.isVertical
                       ? EdgeInsets.symmetric(
                           horizontal:
-                              activeDivider ? 0.0 : widget.dividerMargin)
+                              activeDivider ? 0.0 : widget.dividerMargin!)
                       : EdgeInsets.symmetric(
-                          vertical: activeDivider ? 0.0 : widget.dividerMargin),
+                          vertical:
+                              activeDivider ? 0.0 : widget.dividerMargin!),
                 );
               } else {
                 /// Matches corner radius of active switch to that of border
@@ -335,19 +346,43 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 /// Assigns custom text styles if available.
                 /// Assigns default text style if custom text style is not available.
                 /// Overrides fontSize, activeFgColor, inactiveFgColor.
+                /// Allow Custom Font Style but still respect activeFgColor and inactiveFgColor
                 /// If only one TextStyle is passed then we assume that we wanna
                 /// apply that TextStyle to all the switches.
+                ///
+                TextStyle oneIndexStyle() {
+                  if (widget.customTextStyles![0]!.color == null) {
+                    return widget.customTextStyles![0]!.copyWith(
+                      color: fgColor,
+                    );
+                    return widget.customTextStyles![0]!;
+                  }
+
+                  return widget.customTextStyles![0]!;
+                }
+
                 TextStyle defaultTextStyle = TextStyle(
                   color: fgColor,
                   fontSize: widget.fontSize,
                 );
+
+                TextStyle moreThanOneIndexStyle() {
+                  if (widget.customTextStyles![index ~/ 2]!.color == null) {
+                    return widget.customTextStyles![index ~/ 2]!.copyWith(
+                      color: fgColor,
+                    );
+                  }
+
+                  return widget.customTextStyles![index ~/ 2]!;
+                }
+
                 var textStyle = defaultTextStyle;
                 if (widget.customTextStyles != null) {
                   textStyle = widget.customTextStyles!.length == 1
-                      ? widget.customTextStyles![0]!
+                      ? oneIndexStyle()
                       : (widget.customTextStyles!.length > index ~/ 2 &&
                               widget.customTextStyles![index ~/ 2] != null
-                          ? widget.customTextStyles![index ~/ 2]!
+                          ? moreThanOneIndexStyle()
                           : defaultTextStyle);
                 }
 
@@ -406,8 +441,12 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                                 left: (icon is Container) ? 0.0 : 5.0),
                             child: Text(
                               widget.labels?[index ~/ 2] ?? '',
+                              textAlign:
+                                  (widget.centerText) ? TextAlign.center : null,
                               style: textStyle,
-                              overflow: TextOverflow.ellipsis,
+                              overflow: (!widget.twoLineText)
+                                  ? TextOverflow.ellipsis
+                                  : null,
                             ),
                           ),
                         ),
@@ -434,10 +473,12 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         setState(() => widget.initialLabelIndex = index);
       }
     }
-    if (notifyNull) {
-      widget.onToggle?.call(null);
-    } else {
-      widget.onToggle?.call(index);
+    if (widget.onToggle != null) {
+      if (notifyNull) {
+        widget.onToggle!(null);
+      } else {
+        widget.onToggle!(index);
+      }
     }
   }
 
