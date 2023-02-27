@@ -80,7 +80,7 @@ class ToggleSwitch extends StatefulWidget {
   final bool animate;
 
   /// Set animation duration
-  final int animationDuration;
+  int? animationDuration;
 
   /// Set radius style
   final bool radiusStyle;
@@ -127,7 +127,7 @@ class ToggleSwitch extends StatefulWidget {
       this.customWidths,
       this.customHeights,
       this.animate = false,
-      this.animationDuration = 800,
+      this.animationDuration,
       this.curve = Curves.easeIn,
       this.radiusStyle = false,
       this.textDirectionRTL = false,
@@ -392,9 +392,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    duration: Duration(
-                        milliseconds:
-                            widget.animate ? widget.animationDuration : 0),
+                    duration: Duration(milliseconds: widget.animationDuration!),
                     curve: widget.curve,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
