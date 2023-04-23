@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^2.0.1
+  toggle_switch: ^2.1.0
 ```
 
 Import it:
@@ -352,6 +352,94 @@ SingleChildScrollView(
 ```
 
 ![Custom widths greater than device width](https://media.giphy.com/media/ZkF9MlIm9y1H9baWrZ/giphy.gif)
+
+### Multi-line text with custom text style inheriting activeFgColor and inactiveFgColor
+
+```dart
+ToggleSwitch(
+  initialLabelIndex: 0,
+  minHeight: 100.0,
+  minWidth: 100.0,
+  activeBgColor: [Colors.blueAccent.shade200],
+  activeFgColor: Colors.yellow,
+  customTextStyles: [
+    TextStyle(
+      fontSize: 15.0
+    )
+  ],
+  multiLineText: true,
+  centerText: true,
+  totalSwitches: 2,
+  labels: ['This is multi-line text.', 'One line'],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
+),
+```
+
+![Multi-line text with custom text style inheriting activeFgColor and inactiveFgColor](https://media.giphy.com/media/qNg3CCKpd06rvQp6GY/giphy.gif)
+
+### Cancel toggle
+
+```dart
+ToggleSwitch(
+  initialLabelIndex: 0,
+  inactiveBgColor: Colors.black54,
+  activeBgColor: [Colors.black],
+  totalSwitches: 3,
+  minHeight: 80.0,
+  minWidth: 80.0,
+  customIcons: [
+    Icon(
+      FontAwesomeIcons.bitcoin,
+      color: Color(0xFFF2A900),
+      size: 50.0,
+    ),
+    Icon(
+      FontAwesomeIcons.ethereum,
+      color: Color(0xFF5ca6ce),
+      size: 50.0,
+    ),
+    Icon(
+      FontAwesomeIcons.dollarSign,
+      color: Colors.green.shade700,
+      size: 50.0,
+    )
+  ],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
+  cancelToggle: (index) async {
+    String selection = index == 0
+        ? 'Bitcoin'
+        : index == 1
+            ? 'Ethereum'
+            : 'Fiat';
+    return await showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        content: Text("Select $selection?"),
+        actions: [
+          TextButton(
+              child: Text("No",
+                  style: TextStyle(color: Colors.red)),
+              onPressed: () {
+                Navigator.pop(dialogContext, true);
+              }),
+          TextButton(
+              child: Text("Yes",
+                  style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.pop(dialogContext, false);
+              })
+        ],
+      ),
+    );
+  },
+),
+```
+
+![Cancel toggle](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWNhOGJhNjMzNWNjNmNmOWYwMGI0Nzc3YWEyNjdhYTIyNTRmMDQ2MSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/qHB8oy90lXIfyQE0vi/giphy.gif)
 
 ### TextDirection.rtl and corner radius
 

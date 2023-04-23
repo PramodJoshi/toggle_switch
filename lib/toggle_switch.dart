@@ -111,7 +111,7 @@ class ToggleSwitch extends StatefulWidget {
   final bool centerText;
 
   /// Set the long on Two Lines
-  final bool twoLineText;
+  final bool multiLineText;
 
   ToggleSwitch(
       {Key? key,
@@ -149,7 +149,7 @@ class ToggleSwitch extends StatefulWidget {
       this.isVertical = false,
       this.activeBorders,
       this.centerText = false,
-      this.twoLineText = false})
+      this.multiLineText = false})
       : super(key: key);
 
   @override
@@ -196,14 +196,14 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
     /// Assigns active foreground color to default accent text theme color if it's null/not provided.
     activeFgColor = widget.activeFgColor ??
-        Theme.of(context).primaryTextTheme.bodyText1!.color;
+        Theme.of(context).primaryTextTheme.bodyLarge!.color;
 
     /// Assigns inactive background color to default disabled theme color if it's null/not provided.
     inactiveBgColor = widget.inactiveBgColor ?? Theme.of(context).disabledColor;
 
     /// Assigns inactive foreground color to default text theme color if it's null/not provided.
     inactiveFgColor =
-        widget.inactiveFgColor ?? Theme.of(context).textTheme.bodyText1!.color;
+        widget.inactiveFgColor ?? Theme.of(context).textTheme.bodyLarge!.color;
 
     /// Assigns transparent border color if it's null/not provided.
     borderColor = widget.borderColor ?? [Colors.transparent];
@@ -354,7 +354,11 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 /// Allow Custom Font Style but still respect activeFgColor and inactiveFgColor
                 /// If only one TextStyle is passed then we assume that we wanna
                 /// apply that TextStyle to all the switches.
-                ///
+                TextStyle defaultTextStyle = TextStyle(
+                  color: fgColor,
+                  fontSize: widget.fontSize,
+                );
+
                 TextStyle oneIndexStyle() {
                   if (widget.customTextStyles![0]!.color == null) {
                     return widget.customTextStyles![0]!.copyWith(
@@ -364,12 +368,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   return widget.customTextStyles![0]!;
                 }
 
-                TextStyle defaultTextStyle = TextStyle(
-                  color: fgColor,
-                  fontSize: widget.fontSize,
-                );
-
-                TextStyle moreThanOneIndexStyle() {
+                TextStyle multiIndexStyle() {
                   if (widget.customTextStyles![index ~/ 2]!.color == null) {
                     return widget.customTextStyles![index ~/ 2]!.copyWith(
                       color: fgColor,
@@ -385,7 +384,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                       ? oneIndexStyle()
                       : (widget.customTextStyles!.length > index ~/ 2 &&
                               widget.customTextStyles![index ~/ 2] != null
-                          ? moreThanOneIndexStyle()
+                          ? multiIndexStyle()
                           : defaultTextStyle);
                 }
 
@@ -447,7 +446,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                               textAlign:
                                   (widget.centerText) ? TextAlign.center : null,
                               style: textStyle,
-                              overflow: (!widget.twoLineText)
+                              overflow: (!widget.multiLineText)
                                   ? TextOverflow.ellipsis
                                   : null,
                             ),
@@ -468,17 +467,17 @@ class _ToggleSwitchState extends State<ToggleSwitch>
   /// Handles selection
   void _handleOnTap(int index) async {
     int? newIndex = index;
-    if (widget.doubleTapDisable && widget.initialLabelIndex == index){
+    if (widget.doubleTapDisable && widget.initialLabelIndex == index) {
       newIndex = null;
     }
 
     final cancel = await widget.cancelToggle?.call(newIndex) ?? false;
-    if(cancel){
-        return;
+    if (cancel) {
+      return;
     }
 
     if (widget.changeOnTap) {
-        setState(() => widget.initialLabelIndex = newIndex);
+      setState(() => widget.initialLabelIndex = newIndex);
     }
 
     widget.onToggle?.call(newIndex);
@@ -510,7 +509,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     double extraHeight = 0.10 * totalSwitches;
 
     /// Max screen height
-    double screenHeight = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     /// Returns width per label
     ///

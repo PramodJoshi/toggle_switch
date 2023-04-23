@@ -210,4 +210,38 @@ void main() {
     expect(widget.activeBorders![0],
         equals(Border.all(color: Colors.blue, width: 2.0)));
   });
+
+  testWidgets('Can center text', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 3,
+            initialLabelIndex: 2,
+            centerText: true,
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.centerText, equals(true));
+  });
+
+  testWidgets('Can set multi-line text', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 3,
+            initialLabelIndex: 2,
+            multiLineText: true,
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.multiLineText, equals(true));
+  });
 }

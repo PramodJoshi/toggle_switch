@@ -1,10 +1,22 @@
+## 2.1.0
+* Added cancel toggle function ([PR 77](https://github.com/PramodJoshi/toggle_switch/pull/77/files)):
+    - function:
+        - cancelToggle: (index) {} (return type - Future\<bool>)
+* Added these options [PR 74](https://github.com/PramodJoshi/toggle_switch/pull/74/files)):
+    - center text:
+        - centerText (optional, type bool - default false)
+    - multi-line text:
+        - multiLineText (optional, type bool - default false)
+    - inherit activeFgColor and inactiveFgColor in customTextStyles
+* Null safety improvements ([PR 68](https://github.com/PramodJoshi/toggle_switch/pull/68/files))
+
 ## 2.0.1
 * Added vertical toggle switch option ([PR 51](https://github.com/PramodJoshi/toggle_switch/pull/51/files)):
     - parameter:
         - isVertical (type bool - default false)
 * Added active borders option (Partial implementation from [PR 53](https://github.com/PramodJoshi/toggle_switch/pull/53/files)):
     - parameter:
-        - activeBorders (optional, type List<Border>)
+        - activeBorders (optional, type List\<Border>)
     - list with only one Border value will apply that Border to all the active switches
     - different Border values can be provided for different switches
 * Added divider margin option:
@@ -25,7 +37,7 @@
         - textDirectionRTL (optional, type bool - default false)
 * Added custom widths support
     - parameter:
-        - customWidths (optional, type List<double>)        
+        - customWidths (optional, type List\<double>)
 
 ## 1.3.0
 * Added null support for initialLabelIndex ([PR 39](https://github.com/PramodJoshi/toggle_switch/pull/39/commits)).
@@ -40,13 +52,13 @@
 ## 1.2.0
 * Added custom icons support:
     - parameter:
-        - customIcons (optional, type List<Icon>)
+        - customIcons (optional, type List\<Icon>)
     - customIcons will overwrite 'icons:'
     
 ## 1.1.0
 * Added custom text styles support:
     - parameter:
-        - customTextStyles (optional, type List<TextStyle>)
+        - customTextStyles (optional, type List\<TextStyle>)
     - text style can now be configured for individual switches
 * Added text or icon support:
     - icons parameter now accepts null value (check examples)
@@ -58,15 +70,15 @@
 * Labels parameter is now optional.
 * Added border color and border width support: 
     - parameters:
-        - borderColor (optional, type List<Color> for gradient colors support)
+        - borderColor (optional, type List\<Color> for gradient colors support)
         - borderWidth (optional, type double)
 * Added divider color support:
     - dividerColor (optional, type Color)
 * Added gradient colors support for active backgrounds:
     - activeBgColor and activeBgColors now take an array of Color instead of just Color (check examples)
     - parameters:
-        - activeBgColor (optional, type List<Color>)
-        - activeBgColors (optional, type List<List<Color>>)
+        - activeBgColor (optional, type List\<Color>)
+        - activeBgColors (optional, type List\<List\<Color>>)
 * Added animation support:
     - parameters:
         - animate (optional, type bool):
