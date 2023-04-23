@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 typedef OnToggle = void Function(int? index);
+typedef CancelToggle = Future<bool> Function(int? index);
 
 // ignore: must_be_immutable
 class ToggleSwitch extends StatefulWidget {
@@ -73,6 +74,9 @@ class ToggleSwitch extends StatefulWidget {
   /// OnToggle function
   final OnToggle? onToggle;
 
+  /// CancelToggle function
+  final CancelToggle? cancelToggle;
+
   /// Change selection on tap
   final bool changeOnTap;
 
@@ -121,6 +125,7 @@ class ToggleSwitch extends StatefulWidget {
       this.inactiveBgColor,
       this.inactiveFgColor,
       this.onToggle,
+      this.cancelToggle,
       this.cornerRadius = 8.0,
       this.initialLabelIndex = 0,
       this.minWidth = 72.0,
@@ -462,22 +467,21 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
   /// Handles selection
   void _handleOnTap(int index) async {
-    bool notifyNull = false;
+    int? newIndex = index;
+    if (widget.doubleTapDisable && widget.initialLabelIndex == index){
+      newIndex = null;
+    }
+
+    final cancel = await widget.cancelToggle?.call(newIndex) ?? false;
+    if(cancel){
+        return;
+    }
+
     if (widget.changeOnTap) {
-      if (widget.doubleTapDisable && widget.initialLabelIndex == index) {
-        setState(() => widget.initialLabelIndex = null);
-        notifyNull = true;
-      } else {
-        setState(() => widget.initialLabelIndex = index);
-      }
+        setState(() => widget.initialLabelIndex = newIndex);
     }
-    if (widget.onToggle != null) {
-      if (notifyNull) {
-        widget.onToggle!(null);
-      } else {
-        widget.onToggle!(index);
-      }
-    }
+
+    widget.onToggle?.call(newIndex);
   }
 
   /// Calculates width to prevent overflow by taking screen width into account.
