@@ -29,6 +29,9 @@ class ToggleSwitch extends StatefulWidget {
   /// List of labels
   final List<String>? labels;
 
+  /// List of toggle states [true:enabled; false:disabled]
+  final List<bool>? states;
+
   /// Total number of switches
   final int? totalSwitches;
 
@@ -117,6 +120,7 @@ class ToggleSwitch extends StatefulWidget {
       {Key? key,
       this.totalSwitches,
       this.labels,
+      this.states,
       this.borderColor,
       this.borderWidth,
       this.dividerColor = Colors.white30,
@@ -189,6 +193,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           widget.icons?.length ?? 0,
           widget.customIcons?.length ?? 0
         ].reduce(max);
+
+    final List<bool> states=widget.states?? List<bool>.filled(totalSwitches,true);
     super.build(context);
 
     /// Assigns active background color to default primary theme color if it's null/not provided.
@@ -239,7 +245,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             mainAxisSize: MainAxisSize.min,
             children: List.generate(totalSwitches * 2 - 1, (index) {
               /// Active if index matches current
-              final active = index ~/ 2 == widget.initialLabelIndex;
+              final active = index ~/ 2 == widget.initialLabelIndex && states[index~/ 2];
 
               /// Assigns foreground color based on active status.
               ///
@@ -403,7 +409,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
                 /// Returns switch item
                 return GestureDetector(
-                  onTap: () => _handleOnTap(index ~/ 2),
+                  onTap: () =>states[index ~/ 2] ?_handleOnTap(index ~/ 2) : null,
                   child: AnimatedContainer(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     constraints: BoxConstraints(
