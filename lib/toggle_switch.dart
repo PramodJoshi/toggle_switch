@@ -1,5 +1,4 @@
 //Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
-
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -157,10 +156,10 @@ class ToggleSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ToggleSwitchState createState() => _ToggleSwitchState();
+  ToggleSwitchState createState() => ToggleSwitchState();
 }
 
-class _ToggleSwitchState extends State<ToggleSwitch>
+class ToggleSwitchState extends State<ToggleSwitch>
     with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   /// Active background color
   List<Color>? activeBgColor;
@@ -287,7 +286,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 );
               } else {
                 /// Matches corner radius of active switch to that of border
-                var cornerRadius;
+                late BorderRadius cornerRadius;
                 if (index == 0 && !widget.isVertical) {
                   /// Checks if text direction is set right-to-left and
                   /// assigns corner radius accordingly.
@@ -397,7 +396,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 /// Assigns active border if available.
                 /// If only one active border is passed then we assume that we wanna
                 /// apply that active border to all the switches.
-                var activeBorder;
+                Border? activeBorder;
                 if (widget.activeBorders != null) {
                   activeBorder = widget.activeBorders!.length == 1
                       ? widget.activeBorders![0]
@@ -414,11 +413,11 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     constraints: BoxConstraints(
                       maxWidth: widget.isVertical
-                          ? BoxConstraints().maxWidth
+                          ? const BoxConstraints().maxWidth
                           : _calculateWidth(index ~/ 2, totalSwitches),
                       maxHeight: widget.isVertical
                           ? _calculateHeight(index ~/ 2, totalSwitches)
-                          : BoxConstraints().maxHeight,
+                          : const BoxConstraints().maxHeight,
                     ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -552,17 +551,17 @@ class RowToColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ((isColumnToRow ?? false) ? isVertical : !isVertical)
         ? Row(
+            mainAxisAlignment: mainAxisAlignment ?? const Row().mainAxisAlignment,
+            mainAxisSize: mainAxisSize ?? const Row().mainAxisSize,
+            crossAxisAlignment: crossAxisAlignment ?? const Row().crossAxisAlignment,
             children: children,
-            mainAxisAlignment: mainAxisAlignment ?? Row().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? Row().mainAxisSize,
-            crossAxisAlignment: crossAxisAlignment ?? Row().crossAxisAlignment,
           )
         : Column(
-            children: children,
-            mainAxisAlignment: mainAxisAlignment ?? Column().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? Column().mainAxisSize,
+            mainAxisAlignment: mainAxisAlignment ?? const Column().mainAxisAlignment,
+            mainAxisSize: mainAxisSize ?? const Column().mainAxisSize,
             crossAxisAlignment:
-                crossAxisAlignment ?? Column().crossAxisAlignment,
+                crossAxisAlignment ?? const Column().crossAxisAlignment,
+            children: children,
           );
   }
 }
