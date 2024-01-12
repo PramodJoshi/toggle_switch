@@ -452,6 +452,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                               textAlign:
                                   (widget.centerText) ? TextAlign.center : null,
                               style: textStyle,
+                              maxLines: 1,
+                              textDirection: TextDirection.ltr,
                               overflow: (!widget.multiLineText)
                                   ? TextOverflow.ellipsis
                                   : null,
