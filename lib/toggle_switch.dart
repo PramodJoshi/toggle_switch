@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:toggle_switch/row_to_column.dart';
+
 typedef OnToggle = void Function(int? index);
 typedef CancelToggle = Future<bool> Function(int? index);
 
@@ -324,7 +326,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
                 /// Assigns empty widget if icon is null
                 /// Calculates icon's size to prevent overflow
-                var icon = widget.icons != null &&
+                Widget icon = widget.icons != null &&
                         widget.icons![index ~/ 2] != null
                     ? Icon(
                         widget.icons![index ~/ 2],
@@ -385,7 +387,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                   return widget.customTextStyles![index ~/ 2]!;
                 }
 
-                var textStyle = defaultTextStyle;
+                TextStyle textStyle = defaultTextStyle;
                 if (widget.customTextStyles != null) {
                   textStyle = widget.customTextStyles!.length == 1
                       ? oneIndexStyle()
@@ -528,46 +530,5 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         : ((totalSwitches + extraHeight) * widget.minHeight < screenHeight
             ? widget.minHeight
             : screenHeight / (totalSwitches + extraHeight));
-  }
-}
-
-class RowToColumn extends StatelessWidget {
-  final List<Widget> children;
-  final bool isVertical;
-  final bool? isColumnToRow;
-
-  final MainAxisAlignment? mainAxisAlignment;
-  final MainAxisSize? mainAxisSize;
-  final CrossAxisAlignment? crossAxisAlignment;
-
-  const RowToColumn(
-      {Key? key,
-      required this.children,
-      required this.isVertical,
-      this.isColumnToRow,
-      this.mainAxisAlignment,
-      this.mainAxisSize,
-      this.crossAxisAlignment})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ((isColumnToRow ?? false) ? isVertical : !isVertical)
-        ? Row(
-            mainAxisAlignment:
-                mainAxisAlignment ?? const Row().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Row().mainAxisSize,
-            crossAxisAlignment:
-                crossAxisAlignment ?? const Row().crossAxisAlignment,
-            children: children,
-          )
-        : Column(
-            mainAxisAlignment:
-                mainAxisAlignment ?? const Column().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Column().mainAxisSize,
-            crossAxisAlignment:
-                crossAxisAlignment ?? const Column().crossAxisAlignment,
-            children: children,
-          );
   }
 }

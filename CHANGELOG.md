@@ -1,3 +1,13 @@
+## 2.2.0
+* Minor cleanups and fixes
+* Example updates
+* Added topics, screenshots and funding to pubspec
+* Separated RowToColumn widget class
+* Updated SDK to 4.0.0, modifier fixes ([PR 83](https://github.com/PramodJoshi/toggle_switch/pull/83/files))
+* Added toggle disable functionality ([PR 81](https://github.com/PramodJoshi/toggle_switch/pull/81/files)):
+    - parameter:
+        - states (optional, type List<bool>)
+        
 ## 2.1.0
 * Added cancel toggle function ([PR 77](https://github.com/PramodJoshi/toggle_switch/pull/77/files)):
     - function:
