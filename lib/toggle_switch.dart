@@ -106,6 +106,9 @@ class ToggleSwitch extends StatefulWidget {
 
   /// Use toggle switch vertically
   final bool isVertical;
+  
+  /// Use icon and label vertically
+  final bool isVerticalContent;
 
   /// Set a border only to the active toggle component
   List<Border?>? activeBorders;
@@ -153,7 +156,9 @@ class ToggleSwitch extends StatefulWidget {
       this.isVertical = false,
       this.activeBorders,
       this.centerText = false,
-      this.multiLineText = false})
+      this.multiLineText = false,
+      this.isVerticalContent = false, 
+      })
       : super(key: key);
 
   @override
@@ -439,7 +444,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                         milliseconds:
                             widget.animate ? widget.animationDuration : 0),
                     curve: widget.curve,
-                    child: Row(
+                    child: RowToColumn(
+                      isVertical: widget.isVerticalContent,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         icon,
