@@ -156,10 +156,10 @@ class ToggleSwitch extends StatefulWidget {
       : super(key: key);
 
   @override
-  ToggleSwitchState createState() => ToggleSwitchState();
+  _ToggleSwitchState createState() => _ToggleSwitchState();
 }
 
-class ToggleSwitchState extends State<ToggleSwitch>
+class _ToggleSwitchState extends State<ToggleSwitch>
     with AutomaticKeepAliveClientMixin<ToggleSwitch> {
   /// Active background color
   List<Color>? activeBgColor;
