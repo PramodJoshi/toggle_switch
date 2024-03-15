@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
                   labels: ['YES', ''],
-                  icons: [null, FontAwesomeIcons.times],
+                  icons: [null, FontAwesomeIcons.xmark],
                   onToggle: (index) {
                     print('switched to: $index');
                   },
