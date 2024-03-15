@@ -193,7 +193,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
           widget.customIcons?.length ?? 0
         ].reduce(max);
 
-    final List<bool> states=widget.states?? List<bool>.filled(totalSwitches,true);
+    final List<bool> states =
+        widget.states ?? List<bool>.filled(totalSwitches, true);
     super.build(context);
 
     /// Assigns active background color to default primary theme color if it's null/not provided.
@@ -244,7 +245,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
             mainAxisSize: MainAxisSize.min,
             children: List.generate(totalSwitches * 2 - 1, (index) {
               /// Active if index matches current
-              final active = index ~/ 2 == widget.initialLabelIndex && states[index~/ 2];
+              final active =
+                  index ~/ 2 == widget.initialLabelIndex && states[index ~/ 2];
 
               /// Assigns foreground color based on active status.
               ///
@@ -286,7 +288,7 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 );
               } else {
                 /// Matches corner radius of active switch to that of border
-                late BorderRadius cornerRadius;
+                BorderRadius? cornerRadius;
                 if (index == 0 && !widget.isVertical) {
                   /// Checks if text direction is set right-to-left and
                   /// assigns corner radius accordingly.
@@ -408,7 +410,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
 
                 /// Returns switch item
                 return GestureDetector(
-                  onTap: () =>states[index ~/ 2] ?_handleOnTap(index ~/ 2) : null,
+                  onTap: () =>
+                      states[index ~/ 2] ? _handleOnTap(index ~/ 2) : null,
                   child: AnimatedContainer(
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     constraints: BoxConstraints(
@@ -551,13 +554,16 @@ class RowToColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ((isColumnToRow ?? false) ? isVertical : !isVertical)
         ? Row(
-            mainAxisAlignment: mainAxisAlignment ?? const Row().mainAxisAlignment,
+            mainAxisAlignment:
+                mainAxisAlignment ?? const Row().mainAxisAlignment,
             mainAxisSize: mainAxisSize ?? const Row().mainAxisSize,
-            crossAxisAlignment: crossAxisAlignment ?? const Row().crossAxisAlignment,
+            crossAxisAlignment:
+                crossAxisAlignment ?? const Row().crossAxisAlignment,
             children: children,
           )
         : Column(
-            mainAxisAlignment: mainAxisAlignment ?? const Column().mainAxisAlignment,
+            mainAxisAlignment:
+                mainAxisAlignment ?? const Column().mainAxisAlignment,
             mainAxisSize: mainAxisSize ?? const Column().mainAxisSize,
             crossAxisAlignment:
                 crossAxisAlignment ?? const Column().crossAxisAlignment,

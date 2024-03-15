@@ -4,6 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(
       MaterialApp(
+        theme: ThemeData(
+          primaryColor: Colors.blue,
+        ),
         home: MyApp(),
       ),
     );
