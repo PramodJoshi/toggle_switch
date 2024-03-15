@@ -1,3 +1,7 @@
+## 2.2.1
+* updated version in README
+* updated screenshot
+
 ## 2.2.0
 * Minor cleanups and fixes
 * Example updates
