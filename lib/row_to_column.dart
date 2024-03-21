@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A widget that displays its children in a row or column based on the value of isVertical (toggle switch type).
 class RowToColumn extends StatelessWidget {
   final List<Widget> children;
   final bool isVertical;

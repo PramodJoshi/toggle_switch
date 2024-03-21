@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:toggle_switch/row_to_column.dart';
+import 'package:toggle_switch/utils.dart';
 
 typedef OnToggle = void Function(int? index);
 typedef CancelToggle = Future<bool> Function(int? index);
@@ -250,25 +251,6 @@ class _ToggleSwitchState extends State<ToggleSwitch>
               final active =
                   index ~/ 2 == widget.initialLabelIndex && states[index ~/ 2];
 
-              /// Assigns foreground color based on active status.
-              ///
-              /// Sets active foreground color if current index is active.
-              /// Sets inactive foreground color if current index is inactive.
-              final fgColor = active ? activeFgColor : inactiveFgColor;
-
-              /// Default background color
-              List<Color>? bgColor = [Colors.transparent];
-
-              /// Changes background color if current index is active.
-              ///
-              /// Sets same active background color for all items if active background colors list is empty.
-              /// Sets different active background color for current item by matching index if active background colors list is not empty
-              if (active) {
-                bgColor = widget.activeBgColors == null
-                    ? activeBgColor
-                    : (widget.activeBgColors![index ~/ 2] ?? activeBgColor);
-              }
-
               if (index % 2 == 1) {
                 final activeDivider = active ||
                     (widget.initialLabelIndex != null &&
@@ -289,113 +271,40 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                               activeDivider ? 0.0 : widget.dividerMargin!),
                 );
               } else {
-                /// Matches corner radius of active switch to that of border
-                BorderRadius? cornerRadius;
-                if (index == 0 && !widget.isVertical) {
-                  /// Checks if text direction is set right-to-left and
-                  /// assigns corner radius accordingly.
-                  cornerRadius = widget.textDirectionRTL
-                      ? BorderRadius.horizontal(
-                          right: Radius.circular(widget.cornerRadius),
-                        )
-                      : BorderRadius.horizontal(
-                          left: Radius.circular(widget.cornerRadius),
-                        );
-                }
-                if (index == 0 && widget.isVertical) {
-                  cornerRadius = BorderRadius.vertical(
-                    top: Radius.circular(widget.cornerRadius),
-                  );
-                }
-                if (index ~/ 2 == totalSwitches - 1 && !widget.isVertical) {
-                  /// Checks if text direction is set right-to-left and
-                  /// assigns corner radius accordingly.
-                  cornerRadius = widget.textDirectionRTL
-                      ? BorderRadius.horizontal(
-                          left: Radius.circular(widget.cornerRadius),
-                        )
-                      : BorderRadius.horizontal(
-                          right: Radius.circular(widget.cornerRadius),
-                        );
-                }
-                if (index ~/ 2 == totalSwitches - 1 && widget.isVertical) {
-                  cornerRadius = BorderRadius.vertical(
-                    bottom: Radius.circular(widget.cornerRadius),
-                  );
+                /// Assigns foreground color based on active status.
+                ///
+                /// Sets active foreground color if current index is active.
+                /// Sets inactive foreground color if current index is inactive.
+                final fgColor = active ? activeFgColor : inactiveFgColor;
+
+                /// Default background color
+                List<Color>? bgColor = [Colors.transparent];
+
+                /// Changes background color if current index is active.
+                ///
+                /// Sets same active background color for all items if active background colors list is empty.
+                /// Sets different active background color for current item by matching index if active background colors list is not empty
+                if (active) {
+                  bgColor = widget.activeBgColors == null
+                      ? activeBgColor
+                      : (widget.activeBgColors![index ~/ 2] ?? activeBgColor);
                 }
 
-                /// Assigns empty widget if icon is null
-                /// Calculates icon's size to prevent overflow
-                Widget icon = widget.icons != null &&
-                        widget.icons![index ~/ 2] != null
-                    ? Icon(
-                        widget.icons![index ~/ 2],
-                        color: fgColor,
-                        size: widget.isVertical
-                            ? widget.iconSize >
-                                    (_calculateHeight(
-                                            index ~/ 2, totalSwitches) /
-                                        3)
-                                ? (_calculateHeight(
-                                        index ~/ 2, totalSwitches)) /
-                                    3
-                                : widget.iconSize
-                            : widget.iconSize >
-                                    (_calculateWidth(
-                                            index ~/ 2, totalSwitches) /
-                                        3)
-                                ? (_calculateWidth(index ~/ 2, totalSwitches)) /
-                                    3
-                                : widget.iconSize,
-                      )
-                    : Container();
+                /// Get max possible height
+                double height = Utils.calculateHeight(
+                    context: context,
+                    index: index ~/ 2,
+                    totalSwitches: totalSwitches,
+                    customHeights: widget.customHeights,
+                    minHeight: widget.minHeight);
 
-                /// Assigns custom icon if available.
-                /// Overrides icons passed via icons:
-                if (widget.customIcons != null &&
-                    widget.customIcons![index ~/ 2] != null) {
-                  icon = widget.customIcons![index ~/ 2]!;
-                }
-
-                /// Assigns custom text styles if available.
-                /// Assigns default text style if custom text style is not available.
-                /// Overrides fontSize, activeFgColor, inactiveFgColor.
-                /// Allow Custom Font Style but still respect activeFgColor and inactiveFgColor
-                /// If only one TextStyle is passed then we assume that we wanna
-                /// apply that TextStyle to all the switches.
-                TextStyle defaultTextStyle = TextStyle(
-                  color: fgColor,
-                  fontSize: widget.fontSize,
-                );
-
-                TextStyle oneIndexStyle() {
-                  if (widget.customTextStyles![0]!.color == null) {
-                    return widget.customTextStyles![0]!.copyWith(
-                      color: fgColor,
-                    );
-                  }
-                  return widget.customTextStyles![0]!;
-                }
-
-                TextStyle multiIndexStyle() {
-                  if (widget.customTextStyles![index ~/ 2]!.color == null) {
-                    return widget.customTextStyles![index ~/ 2]!.copyWith(
-                      color: fgColor,
-                    );
-                  }
-
-                  return widget.customTextStyles![index ~/ 2]!;
-                }
-
-                TextStyle textStyle = defaultTextStyle;
-                if (widget.customTextStyles != null) {
-                  textStyle = widget.customTextStyles!.length == 1
-                      ? oneIndexStyle()
-                      : (widget.customTextStyles!.length > index ~/ 2 &&
-                              widget.customTextStyles![index ~/ 2] != null
-                          ? multiIndexStyle()
-                          : defaultTextStyle);
-                }
+                /// Get max possible width
+                double width = Utils.calculateWidth(
+                    context: context,
+                    index: index ~/ 2,
+                    totalSwitches: totalSwitches,
+                    customWidths: widget.customWidths,
+                    minWidth: widget.minWidth);
 
                 /// Assigns active border if available.
                 /// If only one active border is passed then we assume that we wanna
@@ -411,58 +320,67 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 }
 
                 /// Returns switch item
-                return GestureDetector(
-                  onTap: () =>
-                      states[index ~/ 2] ? _handleOnTap(index ~/ 2) : null,
-                  child: AnimatedContainer(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                    constraints: BoxConstraints(
-                      maxWidth: widget.isVertical
-                          ? const BoxConstraints().maxWidth
-                          : _calculateWidth(index ~/ 2, totalSwitches),
-                      maxHeight: widget.isVertical
-                          ? _calculateHeight(index ~/ 2, totalSwitches)
-                          : const BoxConstraints().maxHeight,
-                    ),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: active ? activeBorder : null,
-                      borderRadius: widget.radiusStyle
-                          ? BorderRadius.all(
-                              Radius.circular(widget.cornerRadius))
-                          : cornerRadius,
-                      gradient: LinearGradient(
-                        colors: bgColor!.length == 1
-                            ? [bgColor[0], bgColor[0]]
-                            : bgColor,
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                return Flexible(
+                  child: GestureDetector(
+                    onTap: () =>
+                        states[index ~/ 2] ? _handleOnTap(index ~/ 2) : null,
+                    child: AnimatedContainer(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      constraints: BoxConstraints(
+                        maxWidth: widget.isVertical
+                            ? const BoxConstraints().maxWidth
+                            : width,
+                        maxHeight: widget.isVertical
+                            ? height
+                            : const BoxConstraints().maxHeight,
                       ),
-                    ),
-                    duration: Duration(
-                        milliseconds:
-                            widget.animate ? widget.animationDuration : 0),
-                    curve: widget.curve,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        icon,
-                        Flexible(
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                left: (icon is Container) ? 0.0 : 5.0),
-                            child: Text(
-                              widget.labels?[index ~/ 2] ?? '',
-                              textAlign:
-                                  (widget.centerText) ? TextAlign.center : null,
-                              style: textStyle,
-                              overflow: (!widget.multiLineText)
-                                  ? TextOverflow.ellipsis
-                                  : null,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: active ? activeBorder : null,
+                        borderRadius: widget.radiusStyle
+                            ? BorderRadius.all(
+                                Radius.circular(widget.cornerRadius))
+                            : _cornerRadius(
+                                index: index, totalSwitches: totalSwitches),
+                        gradient: LinearGradient(
+                          colors: bgColor!.length == 1
+                              ? [bgColor[0], bgColor[0]]
+                              : bgColor,
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      duration: Duration(
+                          milliseconds:
+                              widget.animate ? widget.animationDuration : 0),
+                      curve: widget.curve,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          _icon(
+                              index: index ~/ 2,
+                              height: height,
+                              width: width,
+                              fgColor: fgColor),
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: (_icon is SizedBox) ? 0.0 : 5.0),
+                              child: Text(
+                                widget.labels?[index ~/ 2] ?? '',
+                                textAlign: (widget.centerText)
+                                    ? TextAlign.center
+                                    : null,
+                                style: _textStyle(
+                                    index: index ~/ 2, fgColor: fgColor),
+                                overflow: (!widget.multiLineText)
+                                    ? TextOverflow.ellipsis
+                                    : null,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -493,42 +411,121 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     widget.onToggle?.call(newIndex);
   }
 
-  /// Calculates width to prevent overflow by taking screen width into account.
-  /// Ignores customWidths if toggle switch is vertical
-  double _calculateWidth(int index, int totalSwitches) {
-    /// Extra width to prevent overflow and add padding
-    double extraWidth = 0.10 * totalSwitches;
+  /// Get icon widget
+  Widget _icon(
+      {required int index,
+      required double height,
+      required double width,
+      Color? fgColor}) {
+    /// Assigns empty widget if icon is null
+    /// Calculates icon's size to prevent overflow
+    Widget icon = widget.icons != null && widget.icons![index ~/ 2] != null
+        ? Icon(
+            widget.icons![index],
+            color: fgColor,
+            size: widget.isVertical
+                ? widget.iconSize > height / 3
+                    ? height / 3
+                    : widget.iconSize
+                : widget.iconSize > width / 3
+                    ? width / 3
+                    : widget.iconSize,
+          )
+        : const SizedBox();
 
-    /// Max screen width
-    double screenWidth = MediaQuery.of(context).size.width;
+    /// Assigns custom icon if available.
+    /// Overrides icons passed via icons:
+    if (widget.customIcons != null && widget.customIcons![index] != null) {
+      icon = widget.customIcons![index]!;
+    }
 
-    /// Returns width per label
-    ///
-    /// Returns passed minWidth per label if total requested width plus extra width is less than max screen width.
-    /// Returns calculated width to fit within the max screen width if total requested width plus extra width is more than max screen width.
-    return widget.customWidths != null
-        ? widget.customWidths![index]
-        : ((totalSwitches + extraWidth) * widget.minWidth < screenWidth
-            ? widget.minWidth
-            : screenWidth / (totalSwitches + extraWidth));
+    return icon;
   }
 
-  /// Ignores customHeights if toggle switch is horizontal
-  double _calculateHeight(int index, int totalSwitches) {
-    /// Extra height to prevent overflow and add padding
-    double extraHeight = 0.10 * totalSwitches;
+  /// Get text style
+  TextStyle _textStyle({required int index, Color? fgColor}) {
+    /// Assigns custom text styles if available.
+    /// Assigns default text style if custom text style is not available.
+    /// Overrides fontSize, activeFgColor, inactiveFgColor.
+    /// Allow Custom Font Style but still respect activeFgColor and inactiveFgColor
+    /// If only one TextStyle is passed then we assume that we wanna
+    /// apply that TextStyle to all the switches.
 
-    /// Max screen height
-    double screenHeight = MediaQuery.of(context).size.height;
+    TextStyle defaultTextStyle = TextStyle(
+      color: fgColor,
+      fontSize: widget.fontSize,
+    );
 
-    /// Returns width per label
-    ///
-    /// Returns passed minHeight per label if total requested width plus extra height is less than max screen height.
-    /// Returns calculated width to fit within the max screen width if total requested width plus extra height is more than max screen height.
-    return widget.customHeights != null
-        ? widget.customHeights![index]
-        : ((totalSwitches + extraHeight) * widget.minHeight < screenHeight
-            ? widget.minHeight
-            : screenHeight / (totalSwitches + extraHeight));
+    TextStyle oneIndexStyle() {
+      if (widget.customTextStyles![0]!.color == null) {
+        return widget.customTextStyles![0]!.copyWith(
+          color: fgColor,
+        );
+      }
+      return widget.customTextStyles![0]!;
+    }
+
+    TextStyle multiIndexStyle() {
+      if (widget.customTextStyles![index]!.color == null) {
+        return widget.customTextStyles![index]!.copyWith(
+          color: fgColor,
+        );
+      }
+
+      return widget.customTextStyles![index]!;
+    }
+
+    TextStyle textStyle = defaultTextStyle;
+    if (widget.customTextStyles != null) {
+      textStyle = widget.customTextStyles!.length == 1
+          ? oneIndexStyle()
+          : (widget.customTextStyles!.length > index &&
+                  widget.customTextStyles![index] != null
+              ? multiIndexStyle()
+              : defaultTextStyle);
+    }
+
+    return textStyle;
+  }
+
+  /// Get corner radius
+  BorderRadius? _cornerRadius(
+      {required int index, required int totalSwitches}) {
+    /// Matches corner radius of active switch to that of border
+    BorderRadius? cornerRadius;
+    if (index == 0 && !widget.isVertical) {
+      /// Checks if text direction is set right-to-left and
+      /// assigns corner radius accordingly.
+      cornerRadius = widget.textDirectionRTL
+          ? BorderRadius.horizontal(
+              right: Radius.circular(widget.cornerRadius),
+            )
+          : BorderRadius.horizontal(
+              left: Radius.circular(widget.cornerRadius),
+            );
+    }
+    if (index == 0 && widget.isVertical) {
+      cornerRadius = BorderRadius.vertical(
+        top: Radius.circular(widget.cornerRadius),
+      );
+    }
+    if (index ~/ 2 == totalSwitches - 1 && !widget.isVertical) {
+      /// Checks if text direction is set right-to-left and
+      /// assigns corner radius accordingly.
+      cornerRadius = widget.textDirectionRTL
+          ? BorderRadius.horizontal(
+              left: Radius.circular(widget.cornerRadius),
+            )
+          : BorderRadius.horizontal(
+              right: Radius.circular(widget.cornerRadius),
+            );
+    }
+    if (index ~/ 2 == totalSwitches - 1 && widget.isVertical) {
+      cornerRadius = BorderRadius.vertical(
+        bottom: Radius.circular(widget.cornerRadius),
+      );
+    }
+
+    return cornerRadius;
   }
 }

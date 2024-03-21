@@ -1,6 +1,10 @@
+## 2.2.2
+* Fixed overflow [issue](https://github.com/PramodJoshi/toggle_switch/issues/79)
+* Code cleanups
+
 ## 2.2.1
-* updated version in README
-* updated screenshot
+* Updated version in README
+* Updated screenshot
 
 ## 2.2.0
 * Minor cleanups and fixes
@@ -16,7 +20,7 @@
 * Added cancel toggle function ([PR 77](https://github.com/PramodJoshi/toggle_switch/pull/77/files)):
     - function:
         - cancelToggle: (index) {} (return type - Future\<bool>)
-* Added these options [PR 74](https://github.com/PramodJoshi/toggle_switch/pull/74/files)):
+* Added these options ([PR 74](https://github.com/PramodJoshi/toggle_switch/pull/74/files)):
     - center text:
         - centerText (optional, type bool - default false)
     - multi-line text:
