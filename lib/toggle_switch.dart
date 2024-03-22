@@ -319,6 +319,13 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                           : null);
                 }
 
+                /// Get icon
+                Widget icon = _icon(
+                    index: index ~/ 2,
+                    height: height,
+                    width: width,
+                    fgColor: fgColor);
+
                 /// Returns switch item
                 return Flexible(
                   child: GestureDetector(
@@ -357,15 +364,11 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          _icon(
-                              index: index ~/ 2,
-                              height: height,
-                              width: width,
-                              fgColor: fgColor),
+                          icon,
                           Flexible(
                             child: Container(
                               padding: EdgeInsets.only(
-                                  left: (_icon is SizedBox) ? 0.0 : 5.0),
+                                  left: (icon is SizedBox) ? 0.0 : 5.0),
                               child: Text(
                                 widget.labels?[index ~/ 2] ?? '',
                                 textAlign: (widget.centerText)

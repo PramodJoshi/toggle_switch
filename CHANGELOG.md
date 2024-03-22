@@ -1,3 +1,6 @@
+## 2.2.3
+* Fixed center text issue
+
 ## 2.2.2
 * Fixed overflow [issue](https://github.com/PramodJoshi/toggle_switch/issues/79)
 * Code cleanups
