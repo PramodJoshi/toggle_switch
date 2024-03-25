@@ -1,6 +1,6 @@
 name: example
 description: An example application using toggle switch widget.
-version: 2.2.3
+version: 2.3.0
 publish_to: none
 
 environment:

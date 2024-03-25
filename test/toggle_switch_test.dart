@@ -244,4 +244,43 @@ void main() {
     final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
     expect(widget.multiLineText, equals(true));
   });
+
+  testWidgets('Can disable switch', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            totalSwitches: 3,
+            initialLabelIndex: 2,
+            states: [true, false, true],
+          ),
+        ),
+      ),
+    );
+    final widget = tester.widget<ToggleSwitch>(find.byType(ToggleSwitch));
+    expect(widget.states![0], equals(true));
+    expect(widget.states![1], equals(false));
+  });
+
+  testWidgets('Can add custom widgets', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MediaQuery(
+        data: new MediaQueryData(),
+        child: MaterialApp(
+          home: ToggleSwitch(
+            initialLabelIndex: 1,
+            customWidgets: [
+              Text('Hello'),
+              Text('Flutter'),
+            ],
+          ),
+        ),
+      ),
+    );
+    final helloTextFinder = find.text('Hello');
+    final flutterTextFinder = find.text('Flutter');
+    expect(helloTextFinder, findsOneWidget);
+    expect(flutterTextFinder, findsOneWidget);
+  });
 }

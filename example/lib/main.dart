@@ -484,6 +484,113 @@ class MyApp extends StatelessWidget {
                     );
                   },
                 ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Custom widgets:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ToggleSwitch(
+                  initialLabelIndex: 0,
+                  minHeight: 75.0,
+                  minWidth: double.maxFinite,
+                  activeBgColor: [Colors.blue.shade50],
+                  inactiveBgColor: Colors.white,
+                  dividerColor: Colors.blue,
+                  borderColor: [Colors.blue],
+                  borderWidth: 1.0,
+                  customWidgets: [
+                    // Overrides default widgets, foreground colors
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.star,
+                        ),
+                        const SizedBox(width: 10.0),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Free',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '\$0.00',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.solidStar,
+                          color: Color(0xffC0C0C0),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Standard',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '\$4.99',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.solidStar,
+                          color: Color(0xffFFD700),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Pro',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '\$9.99',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  },
+                ),
+                const SizedBox(height: 20.0),
               ],
             ),
           )),

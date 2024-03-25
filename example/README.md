@@ -9,7 +9,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 ```yaml
 dependencies:
   ...
-  toggle_switch: ^2.2.3
+  toggle_switch: ^2.3.0
 ```
 
 Import it:
@@ -128,7 +128,7 @@ ToggleSwitch(
 ),
 ```
 
-![With border color, border width, icons, custom height and different active background colors](https://media.giphy.com/media/yKLaQurj8KvjLaYte0/giphy.gif)
+![With border color, border width, icons, custom height and different active background colors](https://media.giphy.com/media/8881VEqgaGFDlUo1jb/giphy.gif)
 
 ### With gradient border color, divider color and gradient active background colors
 
@@ -157,7 +157,7 @@ ToggleSwitch(
 ),
 ```
 
-![With gradient border color, divider color and gradient active background colors](https://media.giphy.com/media/wIYpfehKbfQFjXmlKC/giphy.gif)
+![With gradient border color, divider color and gradient active background colors](https://media.giphy.com/media/mfjwHe9w1WG0UIZvqF/giphy.gif)
 
 ### With bounceInOut animation
 
@@ -440,6 +440,112 @@ ToggleSwitch(
 ```
 
 ![Cancel toggle](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZWNhOGJhNjMzNWNjNmNmOWYwMGI0Nzc3YWEyNjdhYTIyNTRmMDQ2MSZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/qHB8oy90lXIfyQE0vi/giphy.gif)
+
+### Custom widgets
+
+```dart
+ToggleSwitch(
+  initialLabelIndex: 0,
+  minHeight: 75.0,
+  minWidth: double.maxFinite,
+  activeBgColor: [Colors.blue.shade50],
+  inactiveBgColor: Colors.white,
+  dividerColor: Colors.blue,
+  borderColor: [Colors.blue],
+  borderWidth: 1.0,
+  customWidgets: [
+    // Overrides default widgets, foreground colors
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          FontAwesomeIcons.star,
+        ),
+        const SizedBox(width: 10.0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Free',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              '\$0.00',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
+    ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          FontAwesomeIcons.solidStar,
+          color: Color(0xffC0C0C0),
+        ),
+        const SizedBox(width: 10.0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Standard',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              '\$4.99',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
+    ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          FontAwesomeIcons.solidStar,
+          color: Color(0xffFFD700),
+        ),
+        const SizedBox(width: 10.0),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Pro',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              '\$9.99',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+  onToggle: (index) {
+    print('switched to: $index');
+  },
+),
+```
+
+![Custom widgets](https://media.giphy.com/media/VFcY7CM1Vq9cMkxiTR/giphy.gif)
 
 ### TextDirection.rtl and corner radius
 

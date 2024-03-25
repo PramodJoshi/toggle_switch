@@ -1,3 +1,12 @@
+## 2.3.0
+* Added customWidgets option:
+    - overrides default widgets, foreground colors
+    - parameter:
+        - customWidgets (optional, type List\<Widget>)
+* Added CustomBorderPaint class to optimize gradient border
+* Restructured project with src folder
+* Code cleanups
+
 ## 2.2.3
 * Fixed center text issue
 
@@ -17,7 +26,7 @@
 * Updated SDK to 4.0.0, modifier fixes ([PR 83](https://github.com/PramodJoshi/toggle_switch/pull/83/files))
 * Added toggle disable functionality ([PR 81](https://github.com/PramodJoshi/toggle_switch/pull/81/files)):
     - parameter:
-        - states (optional, type List<bool>)
+        - states (optional, type List\<bool>)
         
 ## 2.1.0
 * Added cancel toggle function ([PR 77](https://github.com/PramodJoshi/toggle_switch/pull/77/files)):
