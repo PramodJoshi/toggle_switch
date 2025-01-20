@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -12,6 +12,8 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
                   totalSwitches: 3,
                   labels: ['America', 'Canada', 'Mexico'],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
                   totalSwitches: 3,
                   labels: ['Tall', 'Grande', 'Venti'],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -82,7 +84,7 @@ class MyApp extends StatelessWidget {
                   labels: ['YES', ''],
                   icons: [null, FontAwesomeIcons.xmark],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -108,7 +110,7 @@ class MyApp extends StatelessWidget {
                     [Colors.pink]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -128,11 +130,7 @@ class MyApp extends StatelessWidget {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 3,
-                  icons: [
-                    FontAwesomeIcons.mars,
-                    FontAwesomeIcons.venus,
-                    FontAwesomeIcons.transgender
-                  ],
+                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus, FontAwesomeIcons.transgender],
                   iconSize: 30.0,
                   borderWidth: 2.0,
                   borderColor: [Colors.blueGrey],
@@ -142,7 +140,7 @@ class MyApp extends StatelessWidget {
                     [Colors.purple]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -162,11 +160,7 @@ class MyApp extends StatelessWidget {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 3,
-                  icons: [
-                    FontAwesomeIcons.facebook,
-                    FontAwesomeIcons.twitter,
-                    FontAwesomeIcons.instagram
-                  ],
+                  icons: [FontAwesomeIcons.facebook, FontAwesomeIcons.twitter, FontAwesomeIcons.instagram],
                   iconSize: 30.0,
                   borderColor: [
                     Color(0xff3b5998),
@@ -180,16 +174,10 @@ class MyApp extends StatelessWidget {
                   activeBgColors: [
                     [Color(0xff3b5998), Color(0xff8b9dc3)],
                     [Color(0xff00aeff), Color(0xff0077f2)],
-                    [
-                      Color(0xfffeda75),
-                      Color(0xfffa7e1e),
-                      Color(0xffd62976),
-                      Color(0xff962fbf),
-                      Color(0xff4f5bd5)
-                    ]
+                    [Color(0xfffeda75), Color(0xfffa7e1e), Color(0xffd62976), Color(0xff962fbf), Color(0xff4f5bd5)]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -222,7 +210,7 @@ class MyApp extends StatelessWidget {
                   curve: Curves.bounceInOut,
                   // animate must be set to true when using custom curve
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -247,7 +235,7 @@ class MyApp extends StatelessWidget {
                   labels: ['True', 'False'],
                   radiusStyle: true,
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -268,17 +256,11 @@ class MyApp extends StatelessWidget {
                   labels: ['Normal', 'Bold', 'Italic'],
                   customTextStyles: [
                     null,
-                    TextStyle(
-                        color: Colors.brown,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w900),
-                    TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontStyle: FontStyle.italic)
+                    TextStyle(color: Colors.brown, fontSize: 18.0, fontWeight: FontWeight.w900),
+                    TextStyle(color: Colors.black, fontSize: 16.0, fontStyle: FontStyle.italic)
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -318,7 +300,7 @@ class MyApp extends StatelessWidget {
                     )
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -361,7 +343,7 @@ class MyApp extends StatelessWidget {
                   ],
                   labels: ['Spring', 'Summer', 'Fall', 'Winter'],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -387,13 +369,9 @@ class MyApp extends StatelessWidget {
                         activeFgColor: Colors.white,
                         inactiveBgColor: Colors.grey,
                         inactiveFgColor: Colors.white,
-                        labels: [
-                          'Yes, the statement above is true',
-                          'False',
-                          'Other'
-                        ],
+                        labels: ['Yes, the statement above is true', 'False', 'Other'],
                         onToggle: (index) {
-                          print('switched to: $index');
+                          debugPrint('switched to: $index');
                         },
                       ),
                     ),
@@ -419,7 +397,7 @@ class MyApp extends StatelessWidget {
                   totalSwitches: 2,
                   labels: ['This is multi-line text.', 'One line'],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 Padding(
@@ -454,7 +432,7 @@ class MyApp extends StatelessWidget {
                     )
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                   cancelToggle: (index) async {
                     String selection = index == 0
@@ -468,14 +446,12 @@ class MyApp extends StatelessWidget {
                         content: Text("Select $selection?"),
                         actions: [
                           TextButton(
-                              child: Text("No",
-                                  style: TextStyle(color: Colors.red)),
+                              child: Text("No", style: TextStyle(color: Colors.red)),
                               onPressed: () {
                                 Navigator.pop(dialogContext, true);
                               }),
                           TextButton(
-                              child: Text("Yes",
-                                  style: TextStyle(color: Colors.black)),
+                              child: Text("Yes", style: TextStyle(color: Colors.black)),
                               onPressed: () {
                                 Navigator.pop(dialogContext, false);
                               })
@@ -587,7 +563,7 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    debugPrint('switched to: $index');
                   },
                 ),
                 const SizedBox(height: 20.0),
