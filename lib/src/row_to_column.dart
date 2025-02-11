@@ -22,22 +22,21 @@ class RowToColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ((isColumnToRow ?? false) ? isVertical : !isVertical)
+    final bool isRow = (isColumnToRow ?? false) ? isVertical : !isVertical;
+    final Widget layout = isRow
         ? Row(
-            mainAxisAlignment:
-                mainAxisAlignment ?? const Row().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Row().mainAxisSize,
-            crossAxisAlignment:
-                crossAxisAlignment ?? const Row().crossAxisAlignment,
+            mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+            mainAxisSize: mainAxisSize ?? MainAxisSize.max,
+            crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
             children: children,
           )
         : Column(
-            mainAxisAlignment:
-                mainAxisAlignment ?? const Column().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Column().mainAxisSize,
-            crossAxisAlignment:
-                crossAxisAlignment ?? const Column().crossAxisAlignment,
+            mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+            mainAxisSize: mainAxisSize ?? MainAxisSize.max,
+            crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
             children: children,
           );
+
+    return layout;
   }
 }

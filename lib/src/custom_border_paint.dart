@@ -39,5 +39,9 @@ class CustomBorderPaint extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomBorderPaint oldDelegate) {
+    return oldDelegate.thickness != thickness ||
+        oldDelegate.radius != radius ||
+        oldDelegate.gradient != gradient;
+  }
 }

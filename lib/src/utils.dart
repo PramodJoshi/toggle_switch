@@ -9,6 +9,13 @@ class Utils {
       required int totalSwitches,
       List<double>? customWidths,
       required double minWidth}) {
+    assert(index >= 0 && totalSwitches > 0);
+    assert(minWidth > 0);
+
+    if (customWidths != null && index < customWidths.length) {
+      return customWidths[index];
+    }
+
     /// Extra width to prevent overflow and add padding
     double extraWidth = 0.10 * totalSwitches;
 
@@ -16,14 +23,12 @@ class Utils {
     double screenWidth = MediaQuery.of(context).size.width;
 
     /// Returns width per label
-    ///
+    ///s
     /// Returns passed minWidth per label if total requested width plus extra width is less than max screen width.
     /// Returns calculated width to fit within the max screen width if total requested width plus extra width is more than max screen width.
-    return customWidths != null
-        ? customWidths[index]
-        : ((totalSwitches + extraWidth) * minWidth < screenWidth
-            ? minWidth
-            : screenWidth / (totalSwitches + extraWidth));
+    return ((totalSwitches + extraWidth) * minWidth < screenWidth)
+        ? minWidth
+        : screenWidth / (totalSwitches + extraWidth);
   }
 
   /// Ignores customHeights if toggle switch is horizontal
