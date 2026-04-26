@@ -283,4 +283,47 @@ void main() {
     expect(helloTextFinder, findsOneWidget);
     expect(flutterTextFinder, findsOneWidget);
   });
+
+  // customWidths that exceed screen width should be scaled down proportionally,
+  // preserving relative ratios without causing overflow.
+  testWidgets('customWidths exceeding screen width are scaled proportionally',
+      (WidgetTester tester) async {
+    // Screen width: 400. customWidths total: 65 + 300 + 65 + 50 = 480,
+    // so the widths should be scaled proportionally.
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(400, 800)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: ToggleSwitch(
+              totalSwitches: 4,
+              labels: const ['A', 'B', 'C', 'D'],
+              customWidths: [65.0, 300.0, 65.0, 50.0], // total 480 > 400
+              minWidth: double.maxFinite,
+              onToggle: (_) {},
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Widget should render without overflow errors.
+    expect(tester.takeException(), isNull);
+
+    // All labels should be visible.
+    expect(find.text('A'), findsOneWidget);
+    expect(find.text('B'), findsOneWidget);
+    expect(find.text('C'), findsOneWidget);
+    expect(find.text('D'), findsOneWidget);
+
+    // 'B' container (customWidth 300) should be wider than 'A' container (customWidth 65),
+    // confirming proportional ratios are preserved after scaling.
+    final containerA = find.ancestor(
+        of: find.text('A'), matching: find.byType(AnimatedContainer));
+    final containerB = find.ancestor(
+        of: find.text('B'), matching: find.byType(AnimatedContainer));
+    final widthA = tester.getSize(containerA.first).width;
+    final widthB = tester.getSize(containerB.first).width;
+    expect(widthB, greaterThan(widthA));
+  });
 }

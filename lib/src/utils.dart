@@ -9,21 +9,28 @@ class Utils {
       required int totalSwitches,
       List<double>? customWidths,
       required double minWidth}) {
-    /// Extra width to prevent overflow and add padding
+    /// Extra width to prevent overflow and add padding — same slack used for both paths.
     double extraWidth = 0.10 * totalSwitches;
 
     /// Max screen width
     double screenWidth = MediaQuery.of(context).size.width;
 
-    /// Returns width per label
-    ///
-    /// Returns passed minWidth per label if total requested width plus extra width is less than max screen width.
-    /// Returns calculated width to fit within the max screen width if total requested width plus extra width is more than max screen width.
-    return customWidths != null
-        ? customWidths[index]
-        : ((totalSwitches + extraWidth) * minWidth < screenWidth
-            ? minWidth
-            : screenWidth / (totalSwitches + extraWidth));
+    if (customWidths != null) {
+      /// Compute the available space the same way the non-custom path does,
+      /// subtracting the same slack so dividers/borders are accounted for.
+      final double available = screenWidth / (1 + extraWidth / totalSwitches);
+      final double total =
+          customWidths.fold<double>(0, (sum, v) => sum + v);
+
+      /// Scale factor is computed once and applied to a single index — O(n) over the build pass.
+      final double scale = total > available ? available / total : 1.0;
+      return customWidths[index] * scale;
+    }
+
+    /// Returns passed minWidth per label if total fits; otherwise scales to fit.
+    return (totalSwitches + extraWidth) * minWidth < screenWidth
+        ? minWidth
+        : screenWidth / (totalSwitches + extraWidth);
   }
 
   /// Ignores customHeights if toggle switch is horizontal
@@ -33,20 +40,22 @@ class Utils {
       required int totalSwitches,
       List<double>? customHeights,
       required double minHeight}) {
-    /// Extra height to prevent overflow and add padding
+    /// Extra height to prevent overflow and add padding — same slack used for both paths.
     double extraHeight = 0.10 * totalSwitches;
 
     /// Max screen height
     double screenHeight = MediaQuery.of(context).size.height;
 
-    /// Returns width per label
-    ///
-    /// Returns passed minHeight per label if total requested width plus extra height is less than max screen height.
-    /// Returns calculated width to fit within the max screen width if total requested width plus extra height is more than max screen height.
-    return customHeights != null
-        ? customHeights[index]
-        : ((totalSwitches + extraHeight) * minHeight < screenHeight
-            ? minHeight
-            : screenHeight / (totalSwitches + extraHeight));
+    if (customHeights != null) {
+      final double available = screenHeight / (1 + extraHeight / totalSwitches);
+      final double total =
+          customHeights.fold<double>(0, (sum, v) => sum + v);
+      final double scale = total > available ? available / total : 1.0;
+      return customHeights[index] * scale;
+    }
+
+    return (totalSwitches + extraHeight) * minHeight < screenHeight
+        ? minHeight
+        : screenHeight / (totalSwitches + extraHeight);
   }
 }
