@@ -301,9 +301,10 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     final activeFgColor = widget.activeFgColor ??
         Theme.of(context).primaryTextTheme.bodyLarge!.color;
 
-    /// Assigns active background color to default primary theme color if it's null/not provided.
+    /// Assigns active background color to the theme's `colorScheme.primary`
+    /// if it's null/not provided.
     final activeBgColor =
-        widget.activeBgColor ?? [Theme.of(context).primaryColor];
+        widget.activeBgColor ?? [Theme.of(context).colorScheme.primary];
 
     /// Assigns foreground color based on active status.
     ///
