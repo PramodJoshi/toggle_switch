@@ -424,8 +424,16 @@ class _ToggleSwitchState extends State<ToggleSwitch>
       newIndex = null;
     }
 
+    // When the widget manages its own state and doubleTapDisable is false,
+    // skip onToggle if the tapped switch is already active — selection unchanged.
+    if (widget.changeOnTap &&
+        !widget.doubleTapDisable &&
+        widget.initialLabelIndex == newIndex) {
+      return;
+    }
+
     final cancel = await widget.cancelToggle?.call(newIndex) ?? false;
-    if (cancel) {
+    if (!mounted || cancel) {
       return;
     }
 

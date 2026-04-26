@@ -283,4 +283,80 @@ void main() {
     expect(helloTextFinder, findsOneWidget);
     expect(flutterTextFinder, findsOneWidget);
   });
+
+  // onToggle should NOT be called when tapping the already-active switch
+  // when changeOnTap is true and doubleTapDisable is false.
+  testWidgets('onToggle is not triggered when tapping already-active switch',
+      (WidgetTester tester) async {
+    int toggleCallCount = 0;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: MediaQueryData(size: const Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 0,
+                onToggle: (index) {
+                  toggleCallCount++;
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Tap on the already-active switch (label 'A', index 0).
+    await tester.tap(find.text('A'));
+    await tester.pumpAndSettle();
+
+    // onToggle should NOT have been called.
+    expect(toggleCallCount, equals(0));
+
+    // Tap on a different switch (label 'B', index 1) — should fire onToggle.
+    await tester.tap(find.text('B'));
+    await tester.pumpAndSettle();
+
+    expect(toggleCallCount, equals(1));
+  });
+
+  // When doubleTapDisable is true, tapping the active switch should fire
+  // onToggle with null (deselect), not be swallowed.
+  testWidgets(
+      'onToggle fires with null when doubleTapDisable is true and active switch is tapped',
+      (WidgetTester tester) async {
+    int? lastToggledIndex = -1;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: MediaQueryData(size: const Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 0,
+                doubleTapDisable: true,
+                onToggle: (index) {
+                  lastToggledIndex = index;
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Tap on the already-active switch (label 'A', index 0).
+    await tester.tap(find.text('A'));
+    await tester.pumpAndSettle();
+
+    // onToggle should be called with null (deselect).
+    expect(lastToggledIndex, isNull);
+  });
 }
