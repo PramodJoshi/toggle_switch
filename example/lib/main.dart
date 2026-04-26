@@ -591,6 +591,24 @@ class MyApp extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 20.0),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Swipe gesture (enableSwipe: true):',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ToggleSwitch(
+                  initialLabelIndex: 0,
+                  totalSwitches: 3,
+                  labels: ['One', 'Two', 'Three'],
+                  enableSwipe: true,
+                  onToggle: (index) {
+                    print('swiped to: $index');
+                  },
+                ),
+                const SizedBox(height: 20.0),
               ],
             ),
           )),

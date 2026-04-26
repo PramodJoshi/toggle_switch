@@ -283,4 +283,158 @@ void main() {
     expect(helloTextFinder, findsOneWidget);
     expect(flutterTextFinder, findsOneWidget);
   });
+
+  // Swiping right on a horizontal ToggleSwitch with enableSwipe:true advances selection.
+  testWidgets('swipe right advances selection when enableSwipe is true',
+      (WidgetTester tester) async {
+    int? lastIndex;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 0,
+                enableSwipe: true,
+                onToggle: (index) => lastIndex = index,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Fling right (positive velocity) on the switch row.
+    await tester.fling(find.text('A'), const Offset(100, 0), 500);
+    await tester.pumpAndSettle();
+
+    expect(lastIndex, equals(1));
+  });
+
+  // Swiping left on a horizontal ToggleSwitch with enableSwipe:true retreats selection.
+  testWidgets('swipe left retreats selection when enableSwipe is true',
+      (WidgetTester tester) async {
+    int? lastIndex;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 2,
+                enableSwipe: true,
+                onToggle: (index) => lastIndex = index,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Fling left (negative velocity) on the switch row.
+    await tester.fling(find.text('C'), const Offset(-100, 0), 500);
+    await tester.pumpAndSettle();
+
+    expect(lastIndex, equals(1));
+  });
+
+  // Swiping does NOT change selection when enableSwipe is false (default).
+  testWidgets('swipe does not change selection when enableSwipe is false',
+      (WidgetTester tester) async {
+    int toggleCallCount = 0;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 0,
+                onToggle: (index) => toggleCallCount++,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await tester.fling(find.text('A'), const Offset(100, 0), 500);
+    await tester.pumpAndSettle();
+
+    expect(toggleCallCount, equals(0));
+  });
+
+  // Swiping beyond the last switch should be ignored.
+  testWidgets('swipe beyond last index is ignored',
+      (WidgetTester tester) async {
+    int toggleCallCount = 0;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                initialLabelIndex: 2, // already at last
+                enableSwipe: true,
+                onToggle: (index) => toggleCallCount++,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Fling right — already at the last switch, should be ignored.
+    await tester.fling(find.text('C'), const Offset(100, 0), 500);
+    await tester.pumpAndSettle();
+
+    expect(toggleCallCount, equals(0));
+  });
+
+  // Swiping into a disabled switch should be ignored.
+  testWidgets('swipe into disabled switch is ignored',
+      (WidgetTester tester) async {
+    int toggleCallCount = 0;
+
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(size: Size(800, 600)),
+        child: MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: ToggleSwitch(
+                totalSwitches: 3,
+                labels: ['A', 'B', 'C'],
+                states: [true, false, true], // index 1 disabled
+                initialLabelIndex: 0,
+                enableSwipe: true,
+                onToggle: (index) => toggleCallCount++,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Fling right — next index (1) is disabled, should be ignored.
+    await tester.fling(find.text('A'), const Offset(100, 0), 500);
+    await tester.pumpAndSettle();
+
+    expect(toggleCallCount, equals(0));
+  });
 }

@@ -122,6 +122,9 @@ class ToggleSwitch extends StatefulWidget {
   /// Set custom widget
   final List<Widget>? customWidgets;
 
+  /// Enable swipe gesture to change selection
+  final bool enableSwipe;
+
   ToggleSwitch({
     Key? key,
     this.totalSwitches,
@@ -161,6 +164,7 @@ class ToggleSwitch extends StatefulWidget {
     this.centerText = false,
     this.multiLineText = false,
     this.customWidgets,
+    this.enableSwipe = false,
   }) : super(key: key);
 
   @override
@@ -247,10 +251,17 @@ class _ToggleSwitchState extends State<ToggleSwitch>
         ),
         height: !widget.isVertical ? widget.minHeight + _borderWidth : null,
         width: widget.isVertical ? widget.minWidth + _borderWidth : null,
-        child: RowToColumn(
-          isVertical: widget.isVertical,
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(_totalSwitches * 2 - 1, (index) {
+        child: GestureDetector(
+          onHorizontalDragEnd: (!widget.enableSwipe || widget.isVertical)
+              ? null
+              : (details) => _handleSwipe(details.primaryVelocity),
+          onVerticalDragEnd: (!widget.enableSwipe || !widget.isVertical)
+              ? null
+              : (details) => _handleSwipe(details.primaryVelocity),
+          child: RowToColumn(
+            isVertical: widget.isVertical,
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(_totalSwitches * 2 - 1, (index) {
             /// Active if index matches current
             final active =
                 index ~/ 2 == widget.initialLabelIndex && states[index ~/ 2];
@@ -266,7 +277,8 @@ class _ToggleSwitchState extends State<ToggleSwitch>
                 states: states,
               );
             }
-          }),
+            }),
+          ),
         ),
       ),
     );
@@ -434,6 +446,27 @@ class _ToggleSwitchState extends State<ToggleSwitch>
     }
 
     widget.onToggle?.call(newIndex);
+  }
+
+  /// Handles swipe gesture to advance or retreat selection by one step.
+  void _handleSwipe(double? velocity) {
+    if (velocity == null || velocity == 0) return;
+    final List<bool> states =
+        widget.states ?? List<bool>.filled(_totalSwitches, true);
+    final int next;
+    if (widget.initialLabelIndex == null) {
+      // From "no selection", swiping right/down selects the first enabled item
+      // and swiping left/up selects the last enabled item.
+      next = velocity > 0 ? 0 : _totalSwitches - 1;
+    } else {
+      final current = widget.initialLabelIndex!;
+      // positive velocity = swipe right/down → advance; negative = swipe left/up → retreat
+      next = velocity > 0 ? current + 1 : current - 1;
+    }
+    if (next < 0 || next >= _totalSwitches) return;
+    // Do not select a disabled switch.
+    if (!states[next]) return;
+    _handleOnTap(next);
   }
 
   /// Icon widget
