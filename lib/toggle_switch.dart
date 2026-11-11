@@ -1,5 +1,5 @@
 //Credit : @Eugene (https://stackoverflow.com/questions/56340682/flutter-equvalent-android-toggle-switch)
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toggle_switch/src/custom_border_paint.dart';
 import 'dart:math';
 

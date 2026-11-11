@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
                   labels: ['YES', ''],
-                  icons: [null, FontAwesomeIcons.xmark],
+                  icons: [null, FontAwesomeIcons.xmark.data],
                   onToggle: (index) {
                     print('switched to: $index');
                   },
@@ -102,7 +102,10 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
                   labels: ['Male', 'Female'],
-                  icons: [FontAwesomeIcons.mars, FontAwesomeIcons.venus],
+                  icons: [
+                    FontAwesomeIcons.mars.data,
+                    FontAwesomeIcons.venus.data,
+                  ],
                   activeBgColors: [
                     [Colors.blue],
                     [Colors.pink]
@@ -129,9 +132,9 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 3,
                   icons: [
-                    FontAwesomeIcons.mars,
-                    FontAwesomeIcons.venus,
-                    FontAwesomeIcons.transgender
+                    FontAwesomeIcons.mars.data,
+                    FontAwesomeIcons.venus.data,
+                    FontAwesomeIcons.transgender.data,
                   ],
                   iconSize: 30.0,
                   borderWidth: 2.0,
@@ -163,9 +166,9 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 3,
                   icons: [
-                    FontAwesomeIcons.facebook,
-                    FontAwesomeIcons.twitter,
-                    FontAwesomeIcons.instagram
+                    FontAwesomeIcons.facebook.data,
+                    FontAwesomeIcons.twitter.data,
+                    FontAwesomeIcons.instagram.data,
                   ],
                   iconSize: 30.0,
                   borderColor: [
@@ -209,8 +212,8 @@ class MyApp extends StatelessWidget {
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
                   icons: [
-                    FontAwesomeIcons.lightbulb,
-                    FontAwesomeIcons.solidLightbulb,
+                    FontAwesomeIcons.lightbulb.data,
+                    FontAwesomeIcons.solidLightbulb.data,
                   ],
                   iconSize: 30.0,
                   activeBgColors: [
@@ -301,17 +304,17 @@ class MyApp extends StatelessWidget {
                   initialLabelIndex: 2,
                   totalSwitches: 3,
                   customIcons: [
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.ccVisa,
                       color: Color(0xff1a1f71),
                       size: 55.0,
                     ),
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.ccMastercard,
                       color: Color(0xffF79E1B),
                       size: 55.0,
                     ),
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.ccAmex,
                       color: Color(0xff27AEE3),
                       size: 55.0,
@@ -437,17 +440,17 @@ class MyApp extends StatelessWidget {
                   minHeight: 80.0,
                   minWidth: 80.0,
                   customIcons: [
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.bitcoin,
                       color: Color(0xFFF2A900),
                       size: 50.0,
                     ),
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.ethereum,
                       color: Color(0xFF5ca6ce),
                       size: 50.0,
                     ),
-                    Icon(
+                    FaIcon(
                       FontAwesomeIcons.dollarSign,
                       color: Colors.green.shade700,
                       size: 50.0,
@@ -505,7 +508,7 @@ class MyApp extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        FaIcon(
                           FontAwesomeIcons.star,
                         ),
                         const SizedBox(width: 10.0),
@@ -532,7 +535,7 @@ class MyApp extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        FaIcon(
                           FontAwesomeIcons.solidStar,
                           color: Color(0xffC0C0C0),
                         ),
@@ -560,7 +563,7 @@ class MyApp extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
+                        FaIcon(
                           FontAwesomeIcons.solidStar,
                           color: Color(0xffFFD700),
                         ),
