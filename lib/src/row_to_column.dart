@@ -25,18 +25,18 @@ class RowToColumn extends StatelessWidget {
     return ((isColumnToRow ?? false) ? isVertical : !isVertical)
         ? Row(
             mainAxisAlignment:
-                mainAxisAlignment ?? const Row().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Row().mainAxisSize,
+                mainAxisAlignment ?? Row().mainAxisAlignment,
+            mainAxisSize: mainAxisSize ?? Row().mainAxisSize,
             crossAxisAlignment:
-                crossAxisAlignment ?? const Row().crossAxisAlignment,
+                crossAxisAlignment ?? Row().crossAxisAlignment,
             children: children,
           )
         : Column(
             mainAxisAlignment:
-                mainAxisAlignment ?? const Column().mainAxisAlignment,
-            mainAxisSize: mainAxisSize ?? const Column().mainAxisSize,
+                mainAxisAlignment ?? Column().mainAxisAlignment,
+            mainAxisSize: mainAxisSize ?? Column().mainAxisSize,
             crossAxisAlignment:
-                crossAxisAlignment ?? const Column().crossAxisAlignment,
+                crossAxisAlignment ?? Column().crossAxisAlignment,
             children: children,
           );
   }
